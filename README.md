@@ -2,6 +2,31 @@
 
 [Chinese edition](README-zh.md)
 
+## Quick install
+
+1. Download the ZIP for your coding agent below. Each ZIP contains all four skills. The bundled finder scripts require Python 3.11 or later.
+2. Extract the ZIP directly into **the root of the project where you use the agent**. Keep the hidden directory from the archive. For Claude Code, for example, you should see `your-project/.claude/skills/tool-finding/SKILL.md`.
+3. Open a fresh agent session in that project and try the prompt below.
+
+| Host and official guide | Download ZIP | Directory in your project |
+| --- | --- | --- |
+| [Codex](https://developers.openai.com/codex/skills/) | [codex.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/codex.zip) | `.agents/skills/` |
+| [Claude Code](https://code.claude.com/docs/en/skills) | [claude-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/claude-code.zip) | `.claude/skills/` |
+| [Cursor](https://cursor.com/docs/skills) | [cursor.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/cursor.zip) | `.cursor/skills/` |
+| [Kimi Code](https://moonshotai.github.io/kimi-cli/en/customization/skills.html) | [kimi-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/kimi-code.zip) | `.kimi/skills/` |
+| [OpenCode](https://opencode.ai/docs/skills/) | [opencode.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/opencode.zip) | `.opencode/skills/` |
+| [Pi](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/skills.md) | [pi.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/pi.zip) | `.pi/skills/` |
+| [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/users/features/skills/) | [qwen-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/qwen-code.zip) | `.qwen/skills/` |
+| [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/skill/skill-filesystem/README.md) | [deepseek-harness.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/deepseek-harness.zip) | `.dsh/skills/` |
+
+```text
+Use the tool-finding skill to compare Python libraries for offline PDF extraction on Windows. Include license terms and support for scanned pages.
+```
+
+Find all packages and release notes on [GitHub Releases](https://github.com/kentozzh/dev-research-skills/releases).
+
+## Included skills
+
 Four agent skills help you research a software design before you commit to it. Use them to compare open-source components, find reusable agent skills, or check what a paper actually demonstrated. Each specialist produces a Chinese report with ranked candidates, evidence for individual requirements, and links to the original sources.
 
 | Skill | When to use it |
@@ -11,22 +36,11 @@ Four agent skills help you research a software design before you commit to it. U
 | `skill-finding` | You want an agent skill that fits a particular host and workflow. |
 | `paper-finding` | You want experimental evidence for a method or architecture and need to understand its limits. |
 
-## Install in a project
+Use `using-dev-research` to choose a research route. In Codex you can also select a skill explicitly with `$dev-research-skill:tool-finding`.
 
-Choose the coding agent you use in the target project. Each archive contains the router and all three finders, including their Python scripts and reference files.
+## Build from source
 
-| Host and official skill guide | `--host` value | Directory after extraction |
-| --- | --- | --- |
-| [Codex](https://developers.openai.com/codex/skills/) | `codex` | `.agents/skills/` |
-| [Claude Code](https://code.claude.com/docs/en/skills) | `claude-code` | `.claude/skills/` |
-| [Cursor](https://cursor.com/docs/skills) | `cursor` | `.cursor/skills/` |
-| [Kimi Code](https://moonshotai.github.io/kimi-cli/en/customization/skills.html) | `kimi-code` | `.kimi/skills/` |
-| [OpenCode](https://opencode.ai/docs/skills/) | `opencode` | `.opencode/skills/` |
-| [Pi](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/skills.md) | `pi` | `.pi/skills/` |
-| [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/users/features/skills/) | `qwen-code` | `.qwen/skills/` |
-| [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/skill/skill-filesystem/README.md) | `deepseek-harness` | `.dsh/skills/` |
-
-Build from this repository with Python 3.11 or later. This PowerShell example selects Claude Code. Set `$agent` to another value in the table to build for that host.
+Run these PowerShell commands from the repository root to build the Claude Code package. For another agent, set `$agent` to its ZIP filename without `.zip`. Omitting `--host` selects Codex.
 
 ```powershell
 python -m venv .venv
@@ -38,13 +52,7 @@ python scripts/build_project_skills.py --host $agent --output "dist/$agent.zip"
 python -m zipfile -e "dist/$agent.zip" "C:\path\to\target-project"
 ```
 
-On macOS or Linux, activate the environment with `source .venv/bin/activate`, then use the same Python commands with your host value and target path. Extract at the root of the project where you run the agent. Open a fresh session there and try this request:
-
-```text
-Use the tool-finding skill to compare Python libraries for offline PDF extraction on Windows. Include license terms and support for scanned pages.
-```
-
-Use `using-dev-research` when you want the agent to choose a research route. In Codex you can also select a skill explicitly with `$dev-research-skill:tool-finding`. Omitting `--host` builds the existing Codex project archive.
+On macOS or Linux, activate the environment with `source .venv/bin/activate`, then use the same Python commands with your host value and target path.
 
 ## Other installation options
 

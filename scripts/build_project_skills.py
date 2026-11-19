@@ -40,6 +40,9 @@ def build_archive(plugin: Path, output: Path, host: str = "codex") -> Path:
     with TemporaryDirectory(dir=output.parent) as staging:
         archive = Path(staging) / "project.zip"
         with ZipFile(archive, "w") as bundle:
+            license_file = Path(__file__).resolve().parents[1] / "LICENSE"
+            bundle.writestr(ZipInfo(f"{prefix}/dev-research-skills-LICENSE.txt"),
+                            license_file.read_bytes(), ZIP_DEFLATED)
             for file in sorted(skills.rglob("*")):
                 if file.is_file():
                     entry = f"{prefix}/{file.relative_to(skills).as_posix()}"

@@ -2,6 +2,31 @@
 
 [English edition](README.md)
 
+## 快速安装
+
+1. 从下表下载你的编程助手对应的 ZIP。每个包都包含四个技能，运行检索脚本需要 Python 3.11 或更高版本。
+2. 将 ZIP 直接解压到**使用技能的项目根目录**，保留包内的隐藏目录。例如，Claude Code 解压后应能找到 `你的项目/.claude/skills/tool-finding/SKILL.md`。
+3. 在该项目中新开一个助手会话，输入下方的示例请求。
+
+| 宿主及官方指南 | 下载 ZIP | 解压后的项目目录 |
+| --- | --- | --- |
+| [Codex](https://developers.openai.com/codex/skills/) | [codex.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/codex.zip) | `.agents/skills/` |
+| [Claude Code](https://code.claude.com/docs/en/skills) | [claude-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/claude-code.zip) | `.claude/skills/` |
+| [Cursor](https://cursor.com/docs/skills) | [cursor.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/cursor.zip) | `.cursor/skills/` |
+| [Kimi Code](https://moonshotai.github.io/kimi-cli/en/customization/skills.html) | [kimi-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/kimi-code.zip) | `.kimi/skills/` |
+| [OpenCode](https://opencode.ai/docs/skills/) | [opencode.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/opencode.zip) | `.opencode/skills/` |
+| [Pi](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/skills.md) | [pi.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/pi.zip) | `.pi/skills/` |
+| [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/users/features/skills/) | [qwen-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/qwen-code.zip) | `.qwen/skills/` |
+| [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/skill/skill-filesystem/README.md) | [deepseek-harness.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/deepseek-harness.zip) | `.dsh/skills/` |
+
+```text
+请使用 tool-finding 技能，比较可在 Windows 离线提取 PDF 文本的 Python 库，并说明各自的许可条款和对扫描页的支持。
+```
+
+所有安装包和版本说明见 [GitHub Releases](https://github.com/kentozzh/dev-research-skills/releases)。
+
+## 技能一览
+
 这四个 Agent 技能用于软件设计阶段的技术调研。你可以用它们比较开源组件、寻找适合当前工作流的 Agent 技能，或核对一篇论文的实验能否支持你的设计。三个专业检索技能均输出中文报告，列出候选排序、各项要求的证据和原始来源。
 
 | 技能 | 适用场景 |
@@ -11,22 +36,11 @@
 | `skill-finding` | 寻找适合指定宿主和工作流的 Agent 技能。 |
 | `paper-finding` | 核对方法或架构的实验证据，了解适用条件和局限。 |
 
-## 在项目中安装
+如果需要助手判断调研方向，可以点名 `using-dev-research`。在 Codex 中也可以用 `$dev-research-skill:tool-finding` 显式选择技能。
 
-根据目标项目使用的编程助手选择安装包。每个包都包含调研路由、三个检索技能及其 Python 脚本和参考文件。
+## 从源码构建
 
-| 宿主及官方技能指南 | `--host` 参数值 | 解压后的目录 |
-| --- | --- | --- |
-| [Codex](https://developers.openai.com/codex/skills/) | `codex` | `.agents/skills/` |
-| [Claude Code](https://code.claude.com/docs/en/skills) | `claude-code` | `.claude/skills/` |
-| [Cursor](https://cursor.com/docs/skills) | `cursor` | `.cursor/skills/` |
-| [Kimi Code](https://moonshotai.github.io/kimi-cli/en/customization/skills.html) | `kimi-code` | `.kimi/skills/` |
-| [OpenCode](https://opencode.ai/docs/skills/) | `opencode` | `.opencode/skills/` |
-| [Pi](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/skills.md) | `pi` | `.pi/skills/` |
-| [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/users/features/skills/) | `qwen-code` | `.qwen/skills/` |
-| [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/skill/skill-filesystem/README.md) | `deepseek-harness` | `.dsh/skills/` |
-
-使用 Python 3.11 或更高版本，在本仓库根目录构建。以下 PowerShell 示例选择 Claude Code。要为其他宿主构建，把 `$agent` 改为表中对应的值。
+以下 PowerShell 命令从本仓库根目录构建 Claude Code 包。要为其他宿主构建，将 `$agent` 设为上表对应的 ZIP 文件名（去掉 `.zip`）。省略 `--host` 时默认构建 Codex 包。
 
 ```powershell
 python -m venv .venv
@@ -38,13 +52,7 @@ python scripts/build_project_skills.py --host $agent --output "dist/$agent.zip"
 python -m zipfile -e "dist/$agent.zip" "C:\path\to\target-project"
 ```
 
-在 macOS 或 Linux 上，用 `source .venv/bin/activate` 激活环境，再把宿主参数值和目标路径代入相同的 Python 命令。将 ZIP 解压到运行编程助手的项目根目录。在该项目中新开会话，试试下面的请求。
-
-```text
-请使用 tool-finding 技能，比较可在 Windows 离线提取 PDF 文本的 Python 库，并说明各自的许可条款和对扫描页的支持。
-```
-
-如果需要助手判断调研方向，可以点名 `using-dev-research`。在 Codex 中也可以用 `$dev-research-skill:tool-finding` 显式选择技能。省略 `--host` 会构建原有的 Codex 项目包。
+在 macOS 或 Linux 上，用 `source .venv/bin/activate` 激活环境，再把宿主参数值和目标路径代入相同的 Python 命令。
 
 ## 其他安装方式
 
