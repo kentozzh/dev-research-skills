@@ -5,7 +5,7 @@ description: Use when researching public open-source projects to learn from thei
 
 # Tool finding
 
-When explicitly selected as $dev-research-skill:tool-finding or by its short name, handle the architecture reference or component selection question directly. A design research handoff may supply the project context and evidence to reuse.
+When explicitly selected as `tool-finding`, handle the architecture reference or component selection question directly. A design research handoff may supply the project context and evidence to reuse.
 
 Turn the request into an evidence-backed architecture reference or component choice. Hard requirements determine eligibility. Popularity helps compare eligible candidates.
 

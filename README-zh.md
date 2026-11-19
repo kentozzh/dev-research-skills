@@ -2,7 +2,7 @@
 
 [English edition](README.md)
 
-这四个 Codex 技能用于软件设计阶段的技术调研。你可以用它们比较开源组件、寻找适合当前工作流的 Agent 技能，或核对一篇论文的实验能否支持你的设计。三个专业检索技能均输出中文报告，列出候选排序、各项要求的证据和原始来源。
+这四个 Agent 技能用于软件设计阶段的技术调研。你可以用它们比较开源组件、寻找适合当前工作流的 Agent 技能，或核对一篇论文的实验能否支持你的设计。三个专业检索技能均输出中文报告，列出候选排序、各项要求的证据和原始来源。
 
 | 技能 | 适用场景 |
 | --- | --- |
@@ -11,25 +11,40 @@
 | `skill-finding` | 寻找适合指定宿主和工作流的 Agent 技能。 |
 | `paper-finding` | 核对方法或架构的实验证据，了解适用条件和局限。 |
 
-## 在 Windows 上快速开始
+## 在项目中安装
 
-准备好 Codex 和 Python 3.11 或更高版本。在仓库根目录打开 PowerShell，构建项目级技能包。
+根据目标项目使用的编程助手选择安装包。每个包都包含调研路由、三个检索技能及其 Python 脚本和参考文件。
+
+| 宿主及官方技能指南 | `--host` 参数值 | 解压后的目录 |
+| --- | --- | --- |
+| [Codex](https://developers.openai.com/codex/skills/) | `codex` | `.agents/skills/` |
+| [Claude Code](https://code.claude.com/docs/en/skills) | `claude-code` | `.claude/skills/` |
+| [Cursor](https://cursor.com/docs/skills) | `cursor` | `.cursor/skills/` |
+| [Kimi Code](https://moonshotai.github.io/kimi-cli/en/customization/skills.html) | `kimi-code` | `.kimi/skills/` |
+| [OpenCode](https://opencode.ai/docs/skills/) | `opencode` | `.opencode/skills/` |
+| [Pi](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/skills.md) | `pi` | `.pi/skills/` |
+| [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/users/features/skills/) | `qwen-code` | `.qwen/skills/` |
+| [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/skill/skill-filesystem/README.md) | `deepseek-harness` | `.dsh/skills/` |
+
+使用 Python 3.11 或更高版本，在本仓库根目录构建。以下 PowerShell 示例选择 Claude Code。要为其他宿主构建，把 `$agent` 改为表中对应的值。
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
-.\.venv\Scripts\python.exe scripts/build_plugin.py --output dist
-.\.venv\Scripts\python.exe scripts/build_plugin.py --check dist/dev-research-skill
-.\.venv\Scripts\python.exe scripts/build_project_skills.py --plugin dist/dev-research-skill --output dist/dev-research-skill-project.zip
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements-dev.txt
+python scripts/build_plugin.py --output dist
+$agent = "claude-code"
+python scripts/build_project_skills.py --host $agent --output "dist/$agent.zip"
+python -m zipfile -e "dist/$agent.zip" "C:\path\to\target-project"
 ```
 
-将 ZIP 解压到需要使用技能的项目根目录，使 `.agents/skills/` 直接位于该目录下。在目标项目中新开 Codex 对话，试试这个请求。
+在 macOS 或 Linux 上，用 `source .venv/bin/activate` 激活环境，再把宿主参数值和目标路径代入相同的 Python 命令。将 ZIP 解压到运行编程助手的项目根目录。在该项目中新开会话，试试下面的请求。
 
 ```text
-$dev-research-skill:tool-finding 为 Windows 选择能离线提取 PDF 文本的 Python 库，比较其许可条款和对扫描页的处理能力。
+请使用 tool-finding 技能，比较可在 Windows 离线提取 PDF 文本的 Python 库，并说明各自的许可条款和对扫描页的支持。
 ```
 
-把 `tool-finding` 替换为表中的其他技能名，即可显式选择对应入口。如果还没确定调研方向，可以从 `$dev-research-skill:using-dev-research` 开始，描述当前要做的设计决定。
+如果需要助手判断调研方向，可以点名 `using-dev-research`。在 Codex 中也可以用 `$dev-research-skill:tool-finding` 显式选择技能。省略 `--host` 会构建原有的 Codex 项目包。
 
 ## 其他安装方式
 
@@ -86,4 +101,4 @@ Agent 记录需求约束、阅读来源并引用证据作出评价。Python 核�
 
 GitHub、arXiv、OpenAlex 和 Semantic Scholar 各有不同的覆盖范围和请求额度。工具可从进程环境读取 `GITHUB_TOKEN`、`OPENALEX_API_KEY` 和 `SEMANTIC_SCHOLAR_API_KEY`。请将凭据保存在请求文件之外。匿名访问 GitHub 时，请求预算较低，检索会回退到仓库发现和具体文件核读。
 
-当前为面向 Windows 和 Codex 的预览版。内置会议数据仅覆盖部分会议及届次。引用数保留提供方标记，核实实验结论需要论文中的证据。运行快照保存在 `--run-dir` 指定的目录。报告默认输出到标准输出，也可用 `--output` 指定文件。
+内置会议数据仅覆盖部分会议及届次。引用数保留提供方标记，核实实验结论需要论文中的证据。运行快照保存在 `--run-dir` 指定的目录。报告默认输出到标准输出，也可用 `--output` 指定文件。

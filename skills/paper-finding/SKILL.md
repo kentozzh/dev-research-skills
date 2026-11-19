@@ -5,7 +5,7 @@ description: Use when finding research-tested frameworks for a concrete project 
 
 # Paper finding
 
-When explicitly selected as $dev-research-skill:paper-finding or by its short name, handle the paper or method question directly. A design research handoff may supply the project context and evidence to reuse.
+When explicitly selected as `paper-finding`, handle the paper or method question directly. A design research handoff may supply the project context and evidence to reuse.
 
 Set `preferences.paper_intent` from the question being answered. Use `framework_discovery` for research-tested workflows spanning the target inputs and outputs. Use `method_evidence` to check a proposed method or design choice against experiments. This includes asking how to choose an individual step and requesting comparative evidence before naming any candidate method. If both questions arise, use the intent for the current phase and carry relevant observations into the next. Preserve the existing paper-selection workflow for saved requests without an intent.
 

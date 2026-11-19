@@ -2,7 +2,7 @@
 
 [Chinese edition](README-zh.md)
 
-Four Codex skills help you research a software design before you commit to it. Use them to compare open-source components, find reusable agent skills, or check what a paper actually demonstrated. Each specialist produces a Chinese report with ranked candidates, evidence for individual requirements, and links to the original sources.
+Four agent skills help you research a software design before you commit to it. Use them to compare open-source components, find reusable agent skills, or check what a paper actually demonstrated. Each specialist produces a Chinese report with ranked candidates, evidence for individual requirements, and links to the original sources.
 
 | Skill | When to use it |
 | --- | --- |
@@ -11,25 +11,40 @@ Four Codex skills help you research a software design before you commit to it. U
 | `skill-finding` | You want an agent skill that fits a particular host and workflow. |
 | `paper-finding` | You want experimental evidence for a method or architecture and need to understand its limits. |
 
-## Quick start on Windows
+## Install in a project
 
-You need Codex and Python 3.11 or later. From the repository root in PowerShell, build the project-local skills archive:
+Choose the coding agent you use in the target project. Each archive contains the router and all three finders, including their Python scripts and reference files.
+
+| Host and official skill guide | `--host` value | Directory after extraction |
+| --- | --- | --- |
+| [Codex](https://developers.openai.com/codex/skills/) | `codex` | `.agents/skills/` |
+| [Claude Code](https://code.claude.com/docs/en/skills) | `claude-code` | `.claude/skills/` |
+| [Cursor](https://cursor.com/docs/skills) | `cursor` | `.cursor/skills/` |
+| [Kimi Code](https://moonshotai.github.io/kimi-cli/en/customization/skills.html) | `kimi-code` | `.kimi/skills/` |
+| [OpenCode](https://opencode.ai/docs/skills/) | `opencode` | `.opencode/skills/` |
+| [Pi](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/skills.md) | `pi` | `.pi/skills/` |
+| [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/users/features/skills/) | `qwen-code` | `.qwen/skills/` |
+| [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/skill/skill-filesystem/README.md) | `deepseek-harness` | `.dsh/skills/` |
+
+Build from this repository with Python 3.11 or later. This PowerShell example selects Claude Code. Set `$agent` to another value in the table to build for that host.
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
-.\.venv\Scripts\python.exe scripts/build_plugin.py --output dist
-.\.venv\Scripts\python.exe scripts/build_plugin.py --check dist/dev-research-skill
-.\.venv\Scripts\python.exe scripts/build_project_skills.py --plugin dist/dev-research-skill --output dist/dev-research-skill-project.zip
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements-dev.txt
+python scripts/build_plugin.py --output dist
+$agent = "claude-code"
+python scripts/build_project_skills.py --host $agent --output "dist/$agent.zip"
+python -m zipfile -e "dist/$agent.zip" "C:\path\to\target-project"
 ```
 
-Extract the ZIP at the root of the project where you want to use the skills. Its `.agents/skills/` directory belongs directly under that root. Open a new Codex chat in the target project and try:
+On macOS or Linux, activate the environment with `source .venv/bin/activate`, then use the same Python commands with your host value and target path. Extract at the root of the project where you run the agent. Open a fresh session there and try this request:
 
 ```text
-$dev-research-skill:tool-finding Find a Python library for offline PDF text extraction on Windows. Compare license terms and handling of scanned pages.
+Use the tool-finding skill to compare Python libraries for offline PDF extraction on Windows. Include license terms and support for scanned pages.
 ```
 
-Replace `tool-finding` with any skill in the table to select it explicitly. You can also start with `$dev-research-skill:using-dev-research` and describe a design decision.
+Use `using-dev-research` when you want the agent to choose a research route. In Codex you can also select a skill explicitly with `$dev-research-skill:tool-finding`. Omitting `--host` builds the existing Codex project archive.
 
 ## Other installation options
 
@@ -86,4 +101,4 @@ This example starts with an empty candidate pool. To rank your own candidates, r
 
 GitHub, arXiv, OpenAlex, and Semantic Scholar have different coverage and quotas. When available, the tools read `GITHUB_TOKEN`, `OPENALEX_API_KEY`, and `SEMANTIC_SCHOLAR_API_KEY` from the process environment. Keep credentials out of request files. Anonymous GitHub discovery has a smaller request budget and falls back to repository discovery and file inspection.
 
-This is a preview for Windows and Codex. The bundled venue data covers selected conferences and editions. Citation counts retain their provider labels, and claims about experiments require evidence from the paper. Run snapshots are written under the directory passed to `--run-dir`; reports go to standard output unless you supply `--output`.
+The bundled venue data covers selected conferences and editions. Citation counts retain their provider labels, and claims about experiments require evidence from the paper. Run snapshots are written under the directory passed to `--run-dir`; reports go to standard output unless you supply `--output`.

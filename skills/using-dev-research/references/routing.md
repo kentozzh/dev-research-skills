@@ -27,7 +27,7 @@ Use one shared design question for multi-route work, with a concrete subquestion
 
 Tell tool-finding whether the intent is architecture reference, component integration, or both. Pass both subquestions when both apply and assess the two uses separately, even for the same repository. A library or framework mention alone does not require Agent skill research.
 
-The specialist selector names are $dev-research-skill:paper-finding, $dev-research-skill:tool-finding, and $dev-research-skill:skill-finding. Inside the package, use the short names in the table to identify host-visible skills. If the needed skill cannot be loaded or read through the host, record that route as unavailable and keep working with accessible routes and existing evidence.
+Load each selected specialist by the short name in the table. Resolve its references and scripts from the directory containing its SKILL.md. If the needed skill cannot be loaded or read through the host, record that route as unavailable and keep working with accessible routes and existing evidence.
 
 ## Handoff and results
 

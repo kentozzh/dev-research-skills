@@ -5,7 +5,7 @@ description: Use when finding or comparing public agent skills to reuse an Agent
 
 # Skill finding
 
-When explicitly selected as $dev-research-skill:skill-finding or by its short name, handle the Agent workflow reuse question directly. A design research handoff may supply the project context and evidence to reuse.
+When explicitly selected as `skill-finding`, handle the Agent workflow reuse question directly. A design research handoff may supply the project context and evidence to reuse.
 
 Choose a concrete skill directory that fits the user's task and host. A repository, collection or tutorial is a discovery source; only an actually read `SKILL.md` establishes a skill candidate. Repository popularity is shared context, not a skill's independent quality or usage.
 

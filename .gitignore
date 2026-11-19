@@ -30,6 +30,13 @@ dist/
 /credentials.json
 /.agents/
 /.codex/
+/.claude/
+/.cursor/
+/.kimi/
+/.opencode/
+/.pi/
+/.qwen/
+/.dsh/
 .idea/
 .vscode/
 .DS_Store
