@@ -56,13 +56,15 @@ gh release download --repo kentozzh/dev-research-skills --pattern cursor.zip --c
 | [Codex](https://developers.openai.com/codex/skills/) | [codex.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/codex.zip) | `.agents/skills/` |
 | [Claude Code](https://code.claude.com/docs/en/skills) | [claude-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/claude-code.zip) | `.claude/skills/` |
 | [Cursor](https://cursor.com/docs/skills) | [cursor.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/cursor.zip) | `.cursor/skills/` |
-| [Kimi Code](https://moonshotai.github.io/kimi-cli/en/customization/skills.html) | [kimi-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/kimi-code.zip) | `.kimi/skills/` |
+| [Kimi Code](https://moonshotai.github.io/kimi-code/en/customization/skills#skill-locations) | [kimi-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/kimi-code.zip) | `.kimi/skills/` |
 | [OpenCode](https://opencode.ai/docs/skills/) | [opencode.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/opencode.zip) | `.opencode/skills/` |
 | [Pi](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/skills.md) | [pi.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/pi.zip) | `.pi/skills/` |
 | [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/users/features/skills/) | [qwen-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/qwen-code.zip) | `.qwen/skills/` |
 | [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/skill/skill-filesystem/README.md) | [deepseek-harness.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/deepseek-harness.zip) | `.dsh/skills/` |
 
-所有安装包和版本说明见 [GitHub Releases](https://github.com/kentozzh/dev-research-skills/releases)。
+**使用 Kimi Code 2.6.3 安装 v1.1.0 ZIP 时**，解压后请在项目根目录运行 `kimi --skills-dir .kimi/skills`。如果希望以后正常启动时自动发现技能，可将解压出的各个技能目录复制到 `.kimi-code/skills/`。
+
+在 Windows 实际会话中，OpenCode、Pi、Qwen Code、DeepSeek Harness，以及按上述步骤启动的 Kimi Code 均成功调用了路由技能。Codex 和 Claude Code 的技能列表均显示了四个技能。Cursor 的会话调用仍待验证。[实测版本与复现步骤](docs/v1.1.0-host-checks.md) · [GitHub Releases](https://github.com/kentozzh/dev-research-skills/releases)
 
 ## 技能一览
 
