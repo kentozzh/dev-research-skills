@@ -14,7 +14,7 @@ PROJECT_ROOTS = {
     "codex": ".agents/skills",
     "claude-code": ".claude/skills",
     "cursor": ".cursor/skills",
-    "kimi-code": ".kimi/skills",
+    "kimi-code": ".kimi-code/skills",
     "opencode": ".opencode/skills",
     "pi": ".pi/skills",
     "qwen-code": ".qwen/skills",

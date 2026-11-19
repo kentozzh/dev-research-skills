@@ -2,7 +2,7 @@
   "name": "dev-research-skill",
   "displayName": "Dev Research Skills",
   "description": "Research software design decisions with open-source projects, reusable agent skills, and papers.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": {
     "name": "kentozzh"
   },

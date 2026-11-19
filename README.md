@@ -56,15 +56,15 @@ To download and extract manually, follow these steps.
 | [Codex](https://developers.openai.com/codex/skills/) | [codex.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/codex.zip) | `.agents/skills/` |
 | [Claude Code](https://code.claude.com/docs/en/skills) | [claude-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/claude-code.zip) | `.claude/skills/` |
 | [Cursor](https://cursor.com/docs/skills) | [cursor.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/cursor.zip) | `.cursor/skills/` |
-| [Kimi Code](https://moonshotai.github.io/kimi-code/en/customization/skills#skill-locations) | [kimi-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/kimi-code.zip) | `.kimi/skills/` |
+| [Kimi Code](https://moonshotai.github.io/kimi-code/en/customization/skills#skill-locations) | [kimi-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/kimi-code.zip) | `.kimi-code/skills/` |
 | [OpenCode](https://opencode.ai/docs/skills/) | [opencode.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/opencode.zip) | `.opencode/skills/` |
 | [Pi](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/skills.md) | [pi.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/pi.zip) | `.pi/skills/` |
 | [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/users/features/skills/) | [qwen-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/qwen-code.zip) | `.qwen/skills/` |
 | [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/skill/skill-filesystem/README.md) | [deepseek-harness.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/deepseek-harness.zip) | `.dsh/skills/` |
 
-**Kimi Code 2.6.3 with the v1.1.0 ZIP:** After extraction, run `kimi --skills-dir .kimi/skills` from the project root. For automatic discovery on subsequent launches, copy the extracted skill directories into `.kimi-code/skills/`.
+**Kimi Code:** Extract the v1.1.1 ZIP into your project root and start `kimi` there. In the new session, try `/skill:using-dev-research`.
 
-Windows sessions verified explicit invocation in OpenCode, Pi, Qwen Code, DeepSeek Harness, and Kimi Code with the step above. Codex and Claude Code listed all four skills. Cursor session verification is pending. [Tested versions and reproduction steps](docs/v1.1.0-host-checks.md) · [GitHub Releases](https://github.com/kentozzh/dev-research-skills/releases)
+The v1.1.1 ZIP was tested in a fresh Kimi Code 2.6.3 session on Windows. Earlier checks covered skill invocation in OpenCode, Pi, Qwen Code, and DeepSeek Harness, and skill discovery in Codex and Claude Code. Cursor session verification is pending. [v1.1.1 release notes](https://github.com/kentozzh/dev-research-skills/releases/tag/v1.1.1) · [v1.1.0 host checks](docs/v1.1.0-host-checks.md)
 
 ## Included skills
 

@@ -37,6 +37,7 @@ dist/
 /.claude/
 /.cursor/
 /.kimi/
+/.kimi-code/
 /.opencode/
 /.pi/
 /.qwen/
