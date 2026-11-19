@@ -12,7 +12,34 @@ After installing the skills, describe the decision and your constraints in a pro
 
 The specialist returns a report in Chinese. It compares candidates against your requirements, ranks those that qualify, links to the original sources, and identifies what you still need to verify.
 
-## Quick install
+## Install and update from GitHub
+
+Choose your coding agent below. Run the commands in a terminal, except for Kimi's chat command and Cursor's UI. Lines containing `&&` work in Bash, zsh, or PowerShell 7. After installation, open a fresh project session and try the request above. The three finders require Python 3.11 or later.
+
+| Coding agent | Install | Update |
+| --- | --- | --- |
+| [Codex](https://developers.openai.com/plugins/build/plugins) | `codex plugin marketplace add kentozzh/dev-research-skills && codex plugin add dev-research-skill@dev-research` | `codex plugin marketplace upgrade dev-research && codex plugin add dev-research-skill@dev-research` |
+| [Claude Code](https://code.claude.com/docs/en/discover-plugins) | `claude plugin marketplace add kentozzh/dev-research-skills && claude plugin install dev-research-skill@dev-research` | `claude plugin marketplace update dev-research && claude plugin update dev-research-skill@dev-research` |
+| [Cursor](https://cursor.com/docs/plugins) | In Customize or a team marketplace with GitHub import, choose **Import from Repo**, paste `https://github.com/kentozzh/dev-research-skills`, then install **Dev Research Skills**. | Choose **Refresh** in the marketplace settings or enable **Auto Refresh**. |
+| [Kimi Code](https://moonshotai.github.io/kimi-code/en/customization/plugins.html) | `/plugins install https://github.com/kentozzh/dev-research-skills/tree/main` | Repeat the install command in Kimi, then run `/reload`. |
+| [OpenCode 2.x](https://opencode.ai/docs/plugins/) | `opencode plugin add github:kentozzh/dev-research-skills` | `opencode plugin update github:kentozzh/dev-research-skills` |
+| [Pi](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md) | `pi install git:github.com/kentozzh/dev-research-skills` | `pi update --extension git:github.com/kentozzh/dev-research-skills` |
+| [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/users/extension/introduction/) | `qwen extensions install https://github.com/kentozzh/dev-research-skills.git --ref main`. Select `dev-research-skill` if prompted. | `qwen extensions update dev-research-skill` |
+| [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/tree/master/packages/boot/app-boot) | `dsh plugin --profile headless add github:kentozzh/dev-research-skills#main` | `dsh plugin --profile headless update dev-research-skill` |
+
+**OpenCode 1.x** reads the project's `opencode.json`. Append `"dev-research-skill@git+https://github.com/kentozzh/dev-research-skills.git#main"` to its `plugin` array and restart. If your version caches the resolved Git revision, reinstall this plugin to refresh it.
+
+**DeepSeek Harness** needs `pnpm` for both commands. Replace `headless` with the profile you actually launch, such as `web`. Kimi namespaces plugin skills, for example `/skill:dev-research-skill:tool-finding`.
+
+## Install a ZIP in one project
+
+For a project-local install or update from the **latest release**, you can also use the GitHub CLI from the project root. This Cursor example works for any host by substituting its filename from the table. It writes or replaces the downloaded ZIP in the current directory and extracts the skills.
+
+```sh
+gh release download --repo kentozzh/dev-research-skills --pattern cursor.zip --clobber && python -m zipfile -e cursor.zip .
+```
+
+To download and extract manually, follow these steps.
 
 1. Download the ZIP for your coding agent below. Each ZIP contains all four skills. The bundled finder scripts require Python 3.11 or later.
 2. Extract the ZIP directly into **the root of the project where you use the agent**. Keep the hidden directory from the archive. For Claude Code, for example, you should see `your-project/.claude/skills/tool-finding/SKILL.md`.

@@ -1,0 +1,8 @@
+{
+  "name": "dev-research-skill",
+  "description": "Research software design decisions with open-source projects, reusable agent skills, and papers.",
+  "author": {
+    "name": "kentozzh"
+  },
+  "license": "MIT"
+}

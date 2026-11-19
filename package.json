@@ -1,0 +1,37 @@
+{
+  "name": "dev-research-skill",
+  "version": "1.1.0",
+  "description": "Research software design decisions with open-source projects, reusable agent skills, and papers.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kentozzh/dev-research-skills.git"
+  },
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./deepseek": "./packaging/deepseek.cjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "packaging/*.cjs",
+    "packaging/deepseek.patch.yml",
+    "skills",
+    "finder_core"
+  ],
+  "dependencies": {
+    "yaml": "^2.8.1"
+  },
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./packaging/deepseek.patch.yml"
+    }
+  }
+}

@@ -12,7 +12,34 @@ dev-research-skills 为编程助手提供了四个软件设计调研技能。你
 
 检索技能会给出中文报告，按你的要求比较候选方案，对符合条件的方案排序，附上原始来源，并指出哪些问题还需要验证。
 
-## 快速安装
+## 从 GitHub 安装与更新
+
+选择你实际使用的编程助手。除 Kimi 的会话命令和 Cursor 的界面操作外，下面的命令都在终端执行。含 `&&` 的一行适用于 Bash、zsh 或 PowerShell 7。安装后在项目中新开会话，试试上面的请求。三个检索技能需要 Python 3.11 或更高版本。
+
+| 编程助手 | 安装 | 更新 |
+| --- | --- | --- |
+| [Codex](https://developers.openai.com/plugins/build/plugins) | `codex plugin marketplace add kentozzh/dev-research-skills && codex plugin add dev-research-skill@dev-research` | `codex plugin marketplace upgrade dev-research && codex plugin add dev-research-skill@dev-research` |
+| [Claude Code](https://code.claude.com/docs/en/discover-plugins) | `claude plugin marketplace add kentozzh/dev-research-skills && claude plugin install dev-research-skill@dev-research` | `claude plugin marketplace update dev-research && claude plugin update dev-research-skill@dev-research` |
+| [Cursor](https://cursor.com/docs/plugins) | 在支持 GitHub 导入的 Customize 或团队 Marketplace 中选择 **Import from Repo**，粘贴 `https://github.com/kentozzh/dev-research-skills`，安装 **Dev Research Skills**。 | 在 marketplace 设置中选择 **Refresh**，或开启 **Auto Refresh**。 |
+| [Kimi Code](https://moonshotai.github.io/kimi-code/en/customization/plugins.html) | `/plugins install https://github.com/kentozzh/dev-research-skills/tree/main` | 在 Kimi 中再次执行安装命令，然后执行 `/reload`。 |
+| [OpenCode 2.x](https://opencode.ai/docs/plugins/) | `opencode plugin add github:kentozzh/dev-research-skills` | `opencode plugin update github:kentozzh/dev-research-skills` |
+| [Pi](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md) | `pi install git:github.com/kentozzh/dev-research-skills` | `pi update --extension git:github.com/kentozzh/dev-research-skills` |
+| [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/users/extension/introduction/) | `qwen extensions install https://github.com/kentozzh/dev-research-skills.git --ref main`，出现选择提示时选 `dev-research-skill`。 | `qwen extensions update dev-research-skill` |
+| [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/tree/master/packages/boot/app-boot) | `dsh plugin --profile headless add github:kentozzh/dev-research-skills#main` | `dsh plugin --profile headless update dev-research-skill` |
+
+**OpenCode 1.x** 使用项目的 `opencode.json`。在已有的 `plugin` 数组中添加 `"dev-research-skill@git+https://github.com/kentozzh/dev-research-skills.git#main"`，然后重启。如果该版本锁定了 Git 修订，重新安装这个插件以刷新缓存。
+
+**DeepSeek Harness** 的安装和更新命令都需要 `pnpm`。将两处 `headless` 换成你实际启动的 profile，例如 `web`。Kimi 插件里的技能带有命名空间，例如 `/skill:dev-research-skill:tool-finding`。
+
+## 下载 ZIP 安装到单个项目
+
+如果当前客户端没有仓库导入入口，也可以用 GitHub CLI 在项目根目录运行一行命令来安装或更新**最新 Release**。以 Cursor 为例，换成下表中的文件名即可用于其他宿主。命令会在当前目录写入或替换下载的 ZIP，并解压技能。
+
+```sh
+gh release download --repo kentozzh/dev-research-skills --pattern cursor.zip --clobber && python -m zipfile -e cursor.zip .
+```
+
+手动下载步骤如下。
 
 1. 从下表下载你的编程助手对应的 ZIP。每个包都包含四个技能，运行检索脚本需要 Python 3.11 或更高版本。
 2. 将 ZIP 直接解压到**使用技能的项目根目录**，保留包内的隐藏目录。例如，Claude Code 解压后应能找到 `你的项目/.claude/skills/tool-finding/SKILL.md`。

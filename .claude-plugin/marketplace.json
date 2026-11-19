@@ -1,0 +1,14 @@
+{
+  "name": "dev-research",
+  "description": "Software design research skills maintained by kentozzh.",
+  "owner": {
+    "name": "kentozzh"
+  },
+  "plugins": [
+    {
+      "name": "dev-research-skill",
+      "source": "./",
+      "description": "Research software design decisions with open-source projects, reusable agent skills, and papers."
+    }
+  ]
+}

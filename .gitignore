@@ -1,4 +1,5 @@
 # Local environments, caches, and packaging output
+node_modules/
 .venv/
 venv/
 __pycache__/
@@ -28,7 +29,10 @@ dist/
 /.ssh/
 /secrets/
 /credentials.json
-/.agents/
+/.agents/*
+!/.agents/plugins/
+/.agents/plugins/*
+!/.agents/plugins/marketplace.json
 /.codex/
 /.claude/
 /.cursor/
