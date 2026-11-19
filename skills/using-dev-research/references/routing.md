@@ -18,6 +18,8 @@ Use observable facts from the current conversation and existing project document
 
 Use one shared design question for multi-route work, with a concrete subquestion for each route. Select by what would resolve the decision.
 
+For a local search service, the paper question might be whether reranking improves retrieval enough to justify its CPU cost. The architecture question is where a comparable project separates indexing from querying. For reuse, identify the step an existing component or agent skill could replace, such as ranking documents or writing regression tests. A user asking only about one of these decisions can go straight to that route.
+
 | Evidence needed | Same-package skill | Question to pass |
 |---|---|---|
 | Research framework or an empirical comparison of methods | paper-finding | Which published frameworks or tested methods address this input, output, and constraint? What can the evidence support here? |

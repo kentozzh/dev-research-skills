@@ -2,7 +2,7 @@
 
 Use the current structured `report --format json` as the numerical, eligibility and formal-order authority. The Markdown renderer supplies a reproducible baseline; the Agent makes the final explanation specific to the request using the recorded judgments and source documents.
 
-State the purpose and use the first item in the formal list as the default first choice. Name the condition and evidence supporting any conditional alternative. Revise and reassess before presenting a changed formal order. An empty formal list opens with no confirmed eligible candidate.
+State the purpose and use the first item in the formal list as the default first choice. Name the condition and evidence supporting any conditional alternative. Revise and reassess before presenting a changed formal order. When the formal list is empty, identify any qualitative architecture or component findings and the evidence still needed to rank them. Report no qualifying candidates only when the qualitative list is also empty.
 
 For architecture reference, name the formal position under that contract and link each design claim to the source file or design section checked. Describe module boundaries, inputs, outputs, trade-offs and transfer conditions. Explain how deployment stack, archive status and maintenance affect the design's applicability. Distinguish the design observed in the repository from the adaptation proposed for the user's project. Propose a walk-through with a representative input and expected outputs at the relevant boundaries.
 

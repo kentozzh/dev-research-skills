@@ -120,6 +120,8 @@ def _render_paper_report(report: RankedReport, rows: list[dict]) -> str:
 
     venue_ids = {key: f"venue-{index}" for index, key in enumerate(dict.fromkeys(scope_key(cid) for cid in cards), 1)}
     summary = f"按本轮契约与正式排序，默认先读 {name(report.formal[0])} {links[report.formal[0]]}。" if report.formal else "暂无可确认符合的候选。"
+    if not report.formal and report.qualitative:
+        summary = "有符合阅读条件的论文可作定性参考，当前证据不足以给出正式排名。"
     constraints = ["- 原始任务：" + safe(request.get("raw_request", ""))]
     constraints.extend(f"- {safe(key)}：{safe(item)}" for key, item in request.get("hard_constraints", {}).items())
     constraints.extend("- 假设：" + safe(item) for item in request.get("assumptions", []))
@@ -376,6 +378,9 @@ def _render_tool_report(report: RankedReport, rows: list[dict]) -> str:
     if architecture:
         summary = (f"架构借鉴正式第 1 名为 {name(report.formal[0])} {links[report.formal[0]]}。"
                    if report.formal else "暂无可确认符合本轮架构借鉴条件的候选。")
+    if not report.formal and report.qualitative:
+        purpose = "架构借鉴" if architecture else "复用"
+        summary = f"有符合{purpose}条件的候选可作定性参考，当前证据不足以给出正式排名。"
     constraints = [f"- 原始任务：{safe(request.get('raw_request', ''))}"]
     if not is_skill:
         constraints.append(f"- 调研用途：{'架构借鉴' if architecture else '组件复用'}")

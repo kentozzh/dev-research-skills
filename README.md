@@ -4,13 +4,19 @@
 
 ## What is dev-research-skills?
 
-dev-research-skills gives your coding agent four skills for researching software design decisions. Use them when you need to choose an open-source component, find an agent skill that fits your workflow, or check whether a paper tested a method under conditions like yours.
+dev-research-skills helps you design a feasible, efficient system by answering three questions before you build it.
 
-After installing the skills, describe the decision and your constraints in a project chat. Ask `using-dev-research` to choose what to investigate, or name a specialist directly. For example:
+| Design question | What the skills bring back |
+| --- | --- |
+| **Which design has research behind it?** | `paper-finding` finds frameworks evaluated on tasks like yours. It identifies the stages the authors tested, the baseline, the measured outcome and the conditions you need to reproduce. |
+| **Who has built something similar?** | `tool-finding` traces a comparable open-source project's design to source files or design documents. You can see where modules meet, what data passes between them and which choices fit your constraints. |
+| **Which steps can I reuse?** | `tool-finding` checks an existing component's interface, dependencies and license. `skill-finding` checks a specific agent skill, its required tools and its fit with your host. Both help you decide what you can adopt and what needs adapting. |
 
-> Use tool-finding to choose a Python library for extracting text from PDFs on Windows. The documents must stay offline. Which libraries handle scanned pages, and what do their licenses allow?
+After installation, give `using-dev-research` your goal, inputs, expected outputs and constraints in a project chat. You can also name a specialist directly.
 
-The specialist returns a report in Chinese. It compares candidates against your requirements, ranks those that qualify, links to the original sources, and identifies what you still need to verify.
+> I'm building local document search on a CPU. Given a text query, I need ranked document IDs. Which retrieval design has been evaluated? How does a similar project separate indexing from queries? Can I reuse a search component and an agent skill for regression tests?
+
+The finders return Chinese reports with original sources, comparisons and remaining checks. In this example, the paper supplied a quality–latency comparison, Pyserini showed the index boundary, and an independent local check exercised SQLite FTS5. The testing skill was reviewed at source level. [Worked example and reproducible check](docs/local-search-case.md)
 
 ## Install and update from GitHub
 

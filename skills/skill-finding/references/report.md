@@ -1,6 +1,6 @@
 # Skill choice report
 
-Use current `report --format json` as the authority for formal order, eligibility and indices. The Markdown renderer supplies the evidence-linked baseline; make the final explanation specific to the user from recorded judgments. Default first choice is `formal[0]`. If a different conditional alternative fits a particular preference, name that condition; revise/reassess before changing formal order. With no formal result, say no confirmed eligible candidate.
+Use current `report --format json` as the authority for formal order, eligibility and indices. The Markdown renderer supplies the evidence-linked baseline; make the final explanation specific to the user from recorded judgments. Default first choice is `formal[0]`. If a different conditional alternative fits a particular preference, name that condition; revise/reassess before changing formal order. With no formal result, surface any qualitative skill findings and the missing comparison facts. Keep unverified host installation explicit.
 
 1. State the first choice, then current task/host, hard conditions, allowed adaptation, preferences and assumptions.
 2. Compare formal results using repository + exact `SKILL.md` path/link, verified commit SHA or unresolved source ref, task fit, repository-level Star/Fork/Watch, license scope, host/dependency costs, maintenance basis, U/P/M and index. Show a condition × candidate matrix including important pending/excluded alternatives. Never label repository counts as a skill's independent Star or usage.
