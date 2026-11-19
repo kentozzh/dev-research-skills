@@ -2,11 +2,21 @@
 
 [English edition](README.md)
 
+## dev-research-skills 是什么？
+
+dev-research-skills 为编程助手提供了四个软件设计调研技能。你可以用它们比较开源组件、寻找适合当前工作流的 Agent 技能，或核对一篇论文的实验结果能否支持你的设计。
+
+安装后，在项目对话中说明你要做的决定和必须满足的条件。可以让 `using-dev-research` 判断该查什么，也可以直接点名一个检索技能。例如：
+
+> 请用 tool-finding 帮我选一个在 Windows 上提取 PDF 文本的 Python 库。文档必须留在本机。哪些库能处理扫描页？各自的许可证允许哪些用途？
+
+检索技能会给出中文报告，按你的要求比较候选方案，对符合条件的方案排序，附上原始来源，并指出哪些问题还需要验证。
+
 ## 快速安装
 
 1. 从下表下载你的编程助手对应的 ZIP。每个包都包含四个技能，运行检索脚本需要 Python 3.11 或更高版本。
 2. 将 ZIP 直接解压到**使用技能的项目根目录**，保留包内的隐藏目录。例如，Claude Code 解压后应能找到 `你的项目/.claude/skills/tool-finding/SKILL.md`。
-3. 在该项目中新开一个助手会话，输入下方的示例请求。
+3. 在该项目中新开一个助手会话，试试上面的示例请求。
 
 | 宿主及官方指南 | 下载 ZIP | 解压后的项目目录 |
 | --- | --- | --- |
@@ -19,15 +29,9 @@
 | [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/users/features/skills/) | [qwen-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/qwen-code.zip) | `.qwen/skills/` |
 | [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/skill/skill-filesystem/README.md) | [deepseek-harness.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/deepseek-harness.zip) | `.dsh/skills/` |
 
-```text
-请使用 tool-finding 技能，比较可在 Windows 离线提取 PDF 文本的 Python 库，并说明各自的许可条款和对扫描页的支持。
-```
-
 所有安装包和版本说明见 [GitHub Releases](https://github.com/kentozzh/dev-research-skills/releases)。
 
 ## 技能一览
-
-这四个 Agent 技能用于软件设计阶段的技术调研。你可以用它们比较开源组件、寻找适合当前工作流的 Agent 技能，或核对一篇论文的实验能否支持你的设计。三个专业检索技能均输出中文报告，列出候选排序、各项要求的证据和原始来源。
 
 | 技能 | 适用场景 |
 | --- | --- |
@@ -36,7 +40,7 @@
 | `skill-finding` | 寻找适合指定宿主和工作流的 Agent 技能。 |
 | `paper-finding` | 核对方法或架构的实验证据，了解适用条件和局限。 |
 
-如果需要助手判断调研方向，可以点名 `using-dev-research`。在 Codex 中也可以用 `$dev-research-skill:tool-finding` 显式选择技能。
+在 Codex 中也可以用 `$dev-research-skill:tool-finding` 显式选择技能。
 
 ## 从源码构建
 

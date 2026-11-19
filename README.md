@@ -2,11 +2,21 @@
 
 [Chinese edition](README-zh.md)
 
+## What is dev-research-skills?
+
+dev-research-skills gives your coding agent four skills for researching software design decisions. Use them when you need to choose an open-source component, find an agent skill that fits your workflow, or check whether a paper tested a method under conditions like yours.
+
+After installing the skills, describe the decision and your constraints in a project chat. Ask `using-dev-research` to choose what to investigate, or name a specialist directly. For example:
+
+> Use tool-finding to choose a Python library for extracting text from PDFs on Windows. The documents must stay offline. Which libraries handle scanned pages, and what do their licenses allow?
+
+The specialist returns a report in Chinese. It compares candidates against your requirements, ranks those that qualify, links to the original sources, and identifies what you still need to verify.
+
 ## Quick install
 
 1. Download the ZIP for your coding agent below. Each ZIP contains all four skills. The bundled finder scripts require Python 3.11 or later.
 2. Extract the ZIP directly into **the root of the project where you use the agent**. Keep the hidden directory from the archive. For Claude Code, for example, you should see `your-project/.claude/skills/tool-finding/SKILL.md`.
-3. Open a fresh agent session in that project and try the prompt below.
+3. Open a fresh agent session in that project and try the example above.
 
 | Host and official guide | Download ZIP | Directory in your project |
 | --- | --- | --- |
@@ -19,15 +29,9 @@
 | [Qwen Code](https://qwenlm.github.io/qwen-code-docs/en/users/features/skills/) | [qwen-code.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/qwen-code.zip) | `.qwen/skills/` |
 | [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/skill/skill-filesystem/README.md) | [deepseek-harness.zip](https://github.com/kentozzh/dev-research-skills/releases/latest/download/deepseek-harness.zip) | `.dsh/skills/` |
 
-```text
-Use the tool-finding skill to compare Python libraries for offline PDF extraction on Windows. Include license terms and support for scanned pages.
-```
-
 Find all packages and release notes on [GitHub Releases](https://github.com/kentozzh/dev-research-skills/releases).
 
 ## Included skills
-
-Four agent skills help you research a software design before you commit to it. Use them to compare open-source components, find reusable agent skills, or check what a paper actually demonstrated. Each specialist produces a Chinese report with ranked candidates, evidence for individual requirements, and links to the original sources.
 
 | Skill | When to use it |
 | --- | --- |
@@ -36,7 +40,7 @@ Four agent skills help you research a software design before you commit to it. U
 | `skill-finding` | You want an agent skill that fits a particular host and workflow. |
 | `paper-finding` | You want experimental evidence for a method or architecture and need to understand its limits. |
 
-Use `using-dev-research` to choose a research route. In Codex you can also select a skill explicitly with `$dev-research-skill:tool-finding`.
+In Codex you can also select a skill explicitly with `$dev-research-skill:tool-finding`.
 
 ## Build from source
 
