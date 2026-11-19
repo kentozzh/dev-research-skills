@@ -1,0 +1,152 @@
+{
+  "version": "venue-editions-v1",
+  "records": {
+    "ACL": {
+      "editions": [
+        {
+          "year": 2022,
+          "ended": true,
+          "evidence_ids": [
+            "acl2022-volume"
+          ]
+        },
+        {
+          "year": 2023,
+          "ended": true,
+          "evidence_ids": [
+            "acl2023-ended"
+          ]
+        },
+        {
+          "year": 2024,
+          "ended": true,
+          "evidence_ids": [
+            "acl2024-ended"
+          ]
+        },
+        {
+          "year": 2025,
+          "ended": true,
+          "evidence_ids": [
+            "acl2025-ended"
+          ]
+        },
+        {
+          "year": 2026,
+          "ended": true,
+          "evidence_ids": [
+            "acl2026-ended"
+          ]
+        }
+      ],
+      "acceptance_numerator": 701,
+      "acceptance_denominator": 1918,
+      "acceptance_scope": "ACL2022 main long+short; accepted701 / committed1918, handbook option(b); not unique ARR submissions and not long-only603",
+      "acceptance_evidence_ids": [
+        "acl2022-handbook"
+      ],
+      "acceptance_year": 2022,
+      "acceptance_denominator_type": "committed papers",
+      "source_urls": [
+        "https://aclanthology.org/2022.acl.handbook.pdf"
+      ]
+    }
+  },
+  "evidence": [
+    {
+      "evidence_id": "acl2022-handbook",
+      "source_url": "https://aclanthology.org/2022.acl.handbook.pdf",
+      "subject_id": "ACL",
+      "fetched_at": "2026-11-17T07:58:28Z",
+      "scope": {
+        "venue": "ACL",
+        "year": 2022,
+        "tracks": [
+          "main"
+        ],
+        "types": [
+          "long",
+          "short"
+        ],
+        "numerator": 701,
+        "denominator": 1918,
+        "denominator_type": "committed papers",
+        "provenance_limit": "Official PDF indexed excerpt verified; full27MB PDF could not be fetched by web reader",
+        "timestamp_note": "Curation recorded_at; pre-existing CCF verification supplied date precision only"
+      },
+      "excerpt": "Handbook program-chair report option(b):701 accepted /1918 committed papers; main conference.",
+      "source_category": "official",
+      "status": "verified",
+      "check_method": "Read primary source text",
+      "source_object": {}
+    },
+    {
+      "evidence_id": "acl2023-ended",
+      "source_url": "https://2023.aclweb.org/",
+      "subject_id": "ACL",
+      "fetched_at": "2026-11-17T08:00:00Z",
+      "scope": {
+        "venue": "ACL",
+        "year": 2023,
+        "scheduled_end_date": "2023-07-14",
+        "ended_as_of": "2026-11-17"
+      },
+      "excerpt": "Official conference website gives scheduled end date 2023-07-14, before verification date.",
+      "source_category": "official",
+      "status": "verified",
+      "check_method": "Read official conference date text and compare to verification date",
+      "source_object": {}
+    },
+    {
+      "evidence_id": "acl2024-ended",
+      "source_url": "https://2024.aclweb.org/",
+      "subject_id": "ACL",
+      "fetched_at": "2026-11-17T08:00:00Z",
+      "scope": {
+        "venue": "ACL",
+        "year": 2024,
+        "scheduled_end_date": "2024-08-16",
+        "ended_as_of": "2026-11-17"
+      },
+      "excerpt": "Official conference website gives scheduled end date 2024-08-16, before verification date.",
+      "source_category": "official",
+      "status": "verified",
+      "check_method": "Read official conference date text and compare to verification date",
+      "source_object": {}
+    },
+    {
+      "evidence_id": "acl2025-ended",
+      "source_url": "https://2025.aclweb.org/",
+      "subject_id": "ACL",
+      "fetched_at": "2026-11-17T08:00:00Z",
+      "scope": {
+        "venue": "ACL",
+        "year": 2025,
+        "scheduled_end_date": "2025-08-01",
+        "ended_as_of": "2026-11-17"
+      },
+      "excerpt": "Official conference website gives scheduled end date 2025-08-01, before verification date.",
+      "source_category": "official",
+      "status": "verified",
+      "check_method": "Read official conference date text and compare to verification date",
+      "source_object": {}
+    },
+    {
+      "evidence_id": "acl2026-ended",
+      "source_url": "https://2026.aclweb.org/",
+      "subject_id": "ACL",
+      "fetched_at": "2026-11-17T08:00:00Z",
+      "scope": {
+        "venue": "ACL",
+        "year": 2026,
+        "scheduled_end_date": "2026-07-07",
+        "ended_as_of": "2026-11-17"
+      },
+      "excerpt": "Official conference website gives scheduled end date 2026-07-07, before verification date.",
+      "source_category": "official",
+      "status": "verified",
+      "check_method": "Read official conference date text and compare to verification date",
+      "source_object": {}
+    }
+  ]
+}

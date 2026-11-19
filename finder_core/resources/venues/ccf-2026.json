@@ -1,0 +1,415 @@
+{
+  "version": "2026-verified-subset-v1",
+  "catalog_coverage": "verified_subset",
+  "catalog_version": "2026",
+  "limitations": [
+    "CCF-authored university-hosted PDF, not official-host-verified; official attachment hash equivalence and later errata unverified.",
+    "Text-layer verification on PDF pages57(A) and58(B); screenshot visual verification incomplete.",
+    "Main research applicability is conservative product scope; PDF lists conference series without explicit Findings/workshop/demo/industry policy.",
+    "Historical evaluation uses current catalog, not publication-year grade."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ccf2026-mirror-ai",
+      "source_url": "https://cce.ncepu.edu.cn/docs/2026-08/75b5af5644e64b519884bf7383f1bde9.pdf",
+      "subject_id": "CCF2026",
+      "fetched_at": "2026-11-17T07:58:28Z",
+      "scope": {
+        "author": "CCF",
+        "catalog_version": "2026",
+        "source_hosting": "CCF-authored university mirror",
+        "venue_grades": {
+          "ACL": "A",
+          "EMNLP": "B",
+          "NAACL": "B",
+          "NeurIPS": "A",
+          "ICML": "A",
+          "ICLR": "A",
+          "CVPR": "A",
+          "AAAI": "A"
+        },
+        "pdf_pages": [
+          57,
+          58
+        ],
+        "verification": "verified-text",
+        "timestamp_note": "Curation recorded_at; pre-existing CCF verification supplied date precision only"
+      },
+      "excerpt": "CCF2026 authored catalogue text: AI conference tables on PDF pages57–58.",
+      "source_category": "third_party",
+      "status": "verified",
+      "check_method": "Read CCF-authored PDF text layer; no official-host hash comparison or successful image review",
+      "source_object": {}
+    }
+  ],
+  "records": [
+    {
+      "version": "2026-verified-subset-v1",
+      "venue_id": "ACL",
+      "aliases": [],
+      "applicable_types": [
+        "long",
+        "short",
+        "conference-paper",
+        "research"
+      ],
+      "applicable_tracks": [
+        "main"
+      ],
+      "ccf": {
+        "value": "A",
+        "status": "verified",
+        "unit": "grade",
+        "provider": "ccf",
+        "subject_id": "ACL",
+        "fetched_at": "2026-11-17T07:58:28Z",
+        "scope": {
+          "catalog_version": "2026",
+          "catalog_coverage": "verified_subset",
+          "source_hosting": "CCF-authored university mirror",
+          "evaluation_basis": "current_catalog",
+          "publication_year_grade": "unknown",
+          "applicable_tracks": [
+            "main"
+          ],
+          "applicable_types": [
+            "long",
+            "short",
+            "conference-paper",
+            "research"
+          ],
+          "source_urls": [
+            "https://cce.ncepu.edu.cn/docs/2026-08/75b5af5644e64b519884bf7383f1bde9.pdf"
+          ],
+          "track_policy": "Conservative application to main research only; other tracks unknown"
+        },
+        "evidence_ids": [
+          "ccf2026-mirror-ai"
+        ],
+        "method_version": "CCF2026-verified-text-subset-v1"
+      }
+    },
+    {
+      "version": "2026-verified-subset-v1",
+      "venue_id": "EMNLP",
+      "aliases": [],
+      "applicable_types": [
+        "long",
+        "short",
+        "conference-paper",
+        "research"
+      ],
+      "applicable_tracks": [
+        "main"
+      ],
+      "ccf": {
+        "value": "B",
+        "status": "verified",
+        "unit": "grade",
+        "provider": "ccf",
+        "subject_id": "EMNLP",
+        "fetched_at": "2026-11-17T07:58:28Z",
+        "scope": {
+          "catalog_version": "2026",
+          "catalog_coverage": "verified_subset",
+          "source_hosting": "CCF-authored university mirror",
+          "evaluation_basis": "current_catalog",
+          "publication_year_grade": "unknown",
+          "applicable_tracks": [
+            "main"
+          ],
+          "applicable_types": [
+            "long",
+            "short",
+            "conference-paper",
+            "research"
+          ],
+          "source_urls": [
+            "https://cce.ncepu.edu.cn/docs/2026-08/75b5af5644e64b519884bf7383f1bde9.pdf"
+          ],
+          "track_policy": "Conservative application to main research only; other tracks unknown"
+        },
+        "evidence_ids": [
+          "ccf2026-mirror-ai"
+        ],
+        "method_version": "CCF2026-verified-text-subset-v1"
+      }
+    },
+    {
+      "version": "2026-verified-subset-v1",
+      "venue_id": "NAACL",
+      "aliases": [],
+      "applicable_types": [
+        "long",
+        "short",
+        "conference-paper",
+        "research"
+      ],
+      "applicable_tracks": [
+        "main"
+      ],
+      "ccf": {
+        "value": "B",
+        "status": "verified",
+        "unit": "grade",
+        "provider": "ccf",
+        "subject_id": "NAACL",
+        "fetched_at": "2026-11-17T07:58:28Z",
+        "scope": {
+          "catalog_version": "2026",
+          "catalog_coverage": "verified_subset",
+          "source_hosting": "CCF-authored university mirror",
+          "evaluation_basis": "current_catalog",
+          "publication_year_grade": "unknown",
+          "applicable_tracks": [
+            "main"
+          ],
+          "applicable_types": [
+            "long",
+            "short",
+            "conference-paper",
+            "research"
+          ],
+          "source_urls": [
+            "https://cce.ncepu.edu.cn/docs/2026-08/75b5af5644e64b519884bf7383f1bde9.pdf"
+          ],
+          "track_policy": "Conservative application to main research only; other tracks unknown"
+        },
+        "evidence_ids": [
+          "ccf2026-mirror-ai"
+        ],
+        "method_version": "CCF2026-verified-text-subset-v1"
+      }
+    },
+    {
+      "version": "2026-verified-subset-v1",
+      "venue_id": "NeurIPS",
+      "aliases": [],
+      "applicable_types": [
+        "long",
+        "short",
+        "conference-paper",
+        "research"
+      ],
+      "applicable_tracks": [
+        "main"
+      ],
+      "ccf": {
+        "value": "A",
+        "status": "verified",
+        "unit": "grade",
+        "provider": "ccf",
+        "subject_id": "NeurIPS",
+        "fetched_at": "2026-11-17T07:58:28Z",
+        "scope": {
+          "catalog_version": "2026",
+          "catalog_coverage": "verified_subset",
+          "source_hosting": "CCF-authored university mirror",
+          "evaluation_basis": "current_catalog",
+          "publication_year_grade": "unknown",
+          "applicable_tracks": [
+            "main"
+          ],
+          "applicable_types": [
+            "long",
+            "short",
+            "conference-paper",
+            "research"
+          ],
+          "source_urls": [
+            "https://cce.ncepu.edu.cn/docs/2026-08/75b5af5644e64b519884bf7383f1bde9.pdf"
+          ],
+          "track_policy": "Conservative application to main research only; other tracks unknown"
+        },
+        "evidence_ids": [
+          "ccf2026-mirror-ai"
+        ],
+        "method_version": "CCF2026-verified-text-subset-v1"
+      }
+    },
+    {
+      "version": "2026-verified-subset-v1",
+      "venue_id": "ICML",
+      "aliases": [],
+      "applicable_types": [
+        "long",
+        "short",
+        "conference-paper",
+        "research"
+      ],
+      "applicable_tracks": [
+        "main"
+      ],
+      "ccf": {
+        "value": "A",
+        "status": "verified",
+        "unit": "grade",
+        "provider": "ccf",
+        "subject_id": "ICML",
+        "fetched_at": "2026-11-17T07:58:28Z",
+        "scope": {
+          "catalog_version": "2026",
+          "catalog_coverage": "verified_subset",
+          "source_hosting": "CCF-authored university mirror",
+          "evaluation_basis": "current_catalog",
+          "publication_year_grade": "unknown",
+          "applicable_tracks": [
+            "main"
+          ],
+          "applicable_types": [
+            "long",
+            "short",
+            "conference-paper",
+            "research"
+          ],
+          "source_urls": [
+            "https://cce.ncepu.edu.cn/docs/2026-08/75b5af5644e64b519884bf7383f1bde9.pdf"
+          ],
+          "track_policy": "Conservative application to main research only; other tracks unknown"
+        },
+        "evidence_ids": [
+          "ccf2026-mirror-ai"
+        ],
+        "method_version": "CCF2026-verified-text-subset-v1"
+      }
+    },
+    {
+      "version": "2026-verified-subset-v1",
+      "venue_id": "ICLR",
+      "aliases": [],
+      "applicable_types": [
+        "long",
+        "short",
+        "conference-paper",
+        "research"
+      ],
+      "applicable_tracks": [
+        "main"
+      ],
+      "ccf": {
+        "value": "A",
+        "status": "verified",
+        "unit": "grade",
+        "provider": "ccf",
+        "subject_id": "ICLR",
+        "fetched_at": "2026-11-17T07:58:28Z",
+        "scope": {
+          "catalog_version": "2026",
+          "catalog_coverage": "verified_subset",
+          "source_hosting": "CCF-authored university mirror",
+          "evaluation_basis": "current_catalog",
+          "publication_year_grade": "unknown",
+          "applicable_tracks": [
+            "main"
+          ],
+          "applicable_types": [
+            "long",
+            "short",
+            "conference-paper",
+            "research"
+          ],
+          "source_urls": [
+            "https://cce.ncepu.edu.cn/docs/2026-08/75b5af5644e64b519884bf7383f1bde9.pdf"
+          ],
+          "track_policy": "Conservative application to main research only; other tracks unknown"
+        },
+        "evidence_ids": [
+          "ccf2026-mirror-ai"
+        ],
+        "method_version": "CCF2026-verified-text-subset-v1"
+      }
+    },
+    {
+      "version": "2026-verified-subset-v1",
+      "venue_id": "CVPR",
+      "aliases": [],
+      "applicable_types": [
+        "long",
+        "short",
+        "conference-paper",
+        "research"
+      ],
+      "applicable_tracks": [
+        "main"
+      ],
+      "ccf": {
+        "value": "A",
+        "status": "verified",
+        "unit": "grade",
+        "provider": "ccf",
+        "subject_id": "CVPR",
+        "fetched_at": "2026-11-17T07:58:28Z",
+        "scope": {
+          "catalog_version": "2026",
+          "catalog_coverage": "verified_subset",
+          "source_hosting": "CCF-authored university mirror",
+          "evaluation_basis": "current_catalog",
+          "publication_year_grade": "unknown",
+          "applicable_tracks": [
+            "main"
+          ],
+          "applicable_types": [
+            "long",
+            "short",
+            "conference-paper",
+            "research"
+          ],
+          "source_urls": [
+            "https://cce.ncepu.edu.cn/docs/2026-08/75b5af5644e64b519884bf7383f1bde9.pdf"
+          ],
+          "track_policy": "Conservative application to main research only; other tracks unknown"
+        },
+        "evidence_ids": [
+          "ccf2026-mirror-ai"
+        ],
+        "method_version": "CCF2026-verified-text-subset-v1"
+      }
+    },
+    {
+      "version": "2026-verified-subset-v1",
+      "venue_id": "AAAI",
+      "aliases": [],
+      "applicable_types": [
+        "long",
+        "short",
+        "conference-paper",
+        "research"
+      ],
+      "applicable_tracks": [
+        "main"
+      ],
+      "ccf": {
+        "value": "A",
+        "status": "verified",
+        "unit": "grade",
+        "provider": "ccf",
+        "subject_id": "AAAI",
+        "fetched_at": "2026-11-17T07:58:28Z",
+        "scope": {
+          "catalog_version": "2026",
+          "catalog_coverage": "verified_subset",
+          "source_hosting": "CCF-authored university mirror",
+          "evaluation_basis": "current_catalog",
+          "publication_year_grade": "unknown",
+          "applicable_tracks": [
+            "main"
+          ],
+          "applicable_types": [
+            "long",
+            "short",
+            "conference-paper",
+            "research"
+          ],
+          "source_urls": [
+            "https://cce.ncepu.edu.cn/docs/2026-08/75b5af5644e64b519884bf7383f1bde9.pdf"
+          ],
+          "track_policy": "Conservative application to main research only; other tracks unknown"
+        },
+        "evidence_ids": [
+          "ccf2026-mirror-ai"
+        ],
+        "method_version": "CCF2026-verified-text-subset-v1"
+      }
+    }
+  ]
+}

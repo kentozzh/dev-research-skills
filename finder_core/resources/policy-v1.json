@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "policy_version": "1.0",
+  "weights": {
+    "skill-finding": {"U": 0.4, "P": 0.35, "M": 0.25},
+    "tool-finding": {"U": 0.35, "P": 0.35, "M": 0.3},
+    "paper-finding": {"L": 0.6, "I": 0.3, "V": 0.1}
+  },
+  "budgets": {"host_search": 8, "github_authenticated": 120, "github_anonymous": 40, "paper_structured": 120},
+  "transport": {"max_retries": 2, "timeout_seconds": 30, "max_wait_seconds": 120, "arxiv_interval_seconds": 3},
+  "capacity": {"formal": 5, "supplementary": 2, "skills_per_repository": 2, "github_initial": 60, "github_deep": 12, "paper_initial": 80, "paper_deep": 12, "paper_read": 5},
+  "cache": {"counts_seconds": 86400, "queries_seconds": 21600, "paper_identity_seconds": 2592000, "sha_files_indefinite": true},
+  "maintenance": {
+    "bands": [{"max_days": 30, "score": 100}, {"max_days": 90, "score": 80}, {"max_days": 180, "score": 60}, {"max_days": 365, "score": 40}],
+    "older_score": 20, "archived_score": 0, "unknown_score": null
+  },
+  "github": {
+    "popularity_weights": {"stars": 0.6, "forks": 0.3, "watch": 0.1},
+    "log_caps": {"stars": 100000, "forks": 10000, "watch": 1000},
+    "without_watch_weights": {"stars": 0.6666666666666666, "forks": 0.3333333333333333},
+    "required_group_metrics": ["U", "M", "stars", "forks"]
+  },
+  "paper": {
+    "recent_months": 24, "route_budget_shares": {"recent": 0.5, "classic": 0.5},
+    "ccf_scores": {"A": 100, "B": 75, "C": 50},
+    "award_bonus": {"best_paper": 5, "outstanding": 3, "distinguished": 3, "honorable_mention": 1},
+    "award_aggregation": "max", "maximum_index": 105,
+    "no_venue_weights": {"L": 0.6666666666666666, "I": 0.3333333333333333},
+    "landing_only_weights": {"L": 1.0},
+    "group_order": ["eligible_R4_R3", "complete_L_G0", "if_any_I_filter_to_I_G", "remove_V_if_any_G_missing", "if_no_I_use_L_only", "freeze_before_top_and_repository_limits"],
+    "venue_coverage_threshold": 0.9, "mature_year_offsets": [6, 5, 4]
+  },
+  "ranking": {
+    "formal_relevance": ["R4", "R3"],
+    "formal_order": ["relevance_desc", "score_desc", "complete_U_or_L_desc", "raw_stars_or_same_database_citations_desc", "candidate_id_asc"],
+    "qualitative_order": ["relevance_desc", "complete_U_or_L_first", "complete_U_or_L_desc", "verified_required_fact_ratio_desc", "candidate_id_asc"],
+    "close_score_difference": 3.0, "sensitivity_weight_delta": 0.1,
+    "freeze_before_limits": true, "hard_constraints_first": true, "empty_group_qualitative_limit": 5
+  },
+  "assessment_items": {
+    "skill-finding": ["host_tools", "dependencies_permissions", "installation", "io_examples"],
+    "tool-finding": ["functionality", "stack", "resources", "documentation"],
+    "paper-finding": ["task_transfer", "artifacts", "resources", "reproducibility"]
+  },
+  "qualitative_fact_fields": {"github": ["identity", "license", "stars", "forks", "updated_at"], "paper": ["identity", "publication_status", "citations", "method", "implementation_resources"]},
+  "report_timezone": "Asia/Shanghai",
+  "external_read_only": true, "execute_candidates": false,
+  "auto_create_accounts": false, "auto_purchase_quota": false, "auto_enable_services": false
+}

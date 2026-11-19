@@ -1,0 +1,37 @@
+{
+  "version": "venue-aliases-v1",
+  "records": {
+    "ACL": {
+      "aliases": [
+        "Annual Meeting of the Association for Computational Linguistics"
+      ],
+      "source_urls": [
+        "https://aclanthology.org/volumes/2022.acl-long/"
+      ],
+      "evidence_ids": [
+        "acl2022-volume"
+      ]
+    }
+  },
+  "evidence": [
+    {
+      "evidence_id": "acl2022-volume",
+      "source_url": "https://aclanthology.org/volumes/2022.acl-long/",
+      "subject_id": "ACL",
+      "fetched_at": "2026-11-17T07:58:28Z",
+      "scope": {
+        "venue": "ACL",
+        "year": 2022,
+        "track": "main",
+        "type": "long",
+        "N": 603,
+        "timestamp_note": "Curation recorded_at; pre-existing CCF verification supplied date precision only"
+      },
+      "excerpt": "Official ACL2022 main long-paper volume:603 papers, all with DOI.",
+      "source_category": "official",
+      "status": "verified",
+      "check_method": "Read primary source text",
+      "source_object": {}
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "version": "venue-awards-v1",
+  "records": {
+    "ACL": {
+      "version": "acl2022-award-identities-subset-v1",
+      "target_years": [
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "coverage_note": "Latest five ended ACL editions as of2026-11-17:2022-2026. Only2022 award setting imported. Two identified winners are a verified subset; no award rate from partial identity lists. Missing years are unknown, not no award.",
+      "evidence_ids": [
+        "acl2022-award-list"
+      ],
+      "editions": [
+        {
+          "year": 2022,
+          "status": "verified",
+          "setting": true,
+          "evidence_ids": [
+            "acl2022-award-list"
+          ],
+          "awards": [
+            {
+              "raw_name": "Best Paper",
+              "category": "best_paper",
+              "status": "verified",
+              "tracks": [
+                "main"
+              ],
+              "types": [
+                "long"
+              ],
+              "member_ids": [
+                "doi:10.18653/v1/2022.acl-long.220"
+              ],
+              "list_complete": false,
+              "denominator": null,
+              "denominator_tracks": [],
+              "denominator_types": [],
+              "evidence_ids": [
+                "acl2022-award-list",
+                "acl2022-best-identity"
+              ]
+            },
+            {
+              "raw_name": "Outstanding Papers",
+              "category": "outstanding",
+              "status": "verified",
+              "tracks": [
+                "main"
+              ],
+              "types": [
+                "long"
+              ],
+              "member_ids": [
+                "doi:10.18653/v1/2022.acl-long.506"
+              ],
+              "list_complete": false,
+              "denominator": null,
+              "denominator_tracks": [],
+              "denominator_types": [],
+              "evidence_ids": [
+                "acl2022-award-list",
+                "acl2022-outstanding-identity"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "evidence": [
+    {
+      "evidence_id": "acl2022-award-list",
+      "source_url": "https://2022.aclweb.org/best-paper-awards.html",
+      "subject_id": "ACL",
+      "fetched_at": "2026-11-17T07:58:28Z",
+      "scope": {
+        "venue": "ACL",
+        "year": 2022,
+        "tracks": [
+          "main"
+        ],
+        "award_setting": true,
+        "identity_coverage": "verified subset",
+        "timestamp_note": "Curation recorded_at; pre-existing CCF verification supplied date precision only",
+        "award_types": {
+          "Best Paper": "best_paper",
+          "Outstanding Papers": "outstanding"
+        }
+      },
+      "excerpt": "Official ACL2022 award list names Learned Incremental Representations for Parsing (Best Paper) and Evaluating Factuality in Text Simplification (Outstanding Papers).",
+      "source_category": "official",
+      "status": "verified",
+      "check_method": "Read primary source text",
+      "source_object": {}
+    },
+    {
+      "evidence_id": "acl2022-best-identity",
+      "source_url": "https://aclanthology.org/2022.acl-long.220/",
+      "subject_id": "doi:10.18653/v1/2022.acl-long.220",
+      "fetched_at": "2026-11-17T07:58:28Z",
+      "scope": {
+        "venue": "ACL",
+        "year": 2022,
+        "track": "main",
+        "type": "long",
+        "doi": "10.18653/v1/2022.acl-long.220",
+        "timestamp_note": "Curation recorded_at; pre-existing CCF verification supplied date precision only"
+      },
+      "excerpt": "Official Anthology paper identity for Learned Incremental Representations for Parsing.",
+      "source_category": "official",
+      "status": "verified",
+      "check_method": "Read primary source text",
+      "source_object": {}
+    },
+    {
+      "evidence_id": "acl2022-outstanding-identity",
+      "source_url": "https://aclanthology.org/2022.acl-long.506/",
+      "subject_id": "doi:10.18653/v1/2022.acl-long.506",
+      "fetched_at": "2026-11-17T07:58:28Z",
+      "scope": {
+        "venue": "ACL",
+        "year": 2022,
+        "track": "main",
+        "type": "long",
+        "doi": "10.18653/v1/2022.acl-long.506",
+        "timestamp_note": "Curation recorded_at; pre-existing CCF verification supplied date precision only"
+      },
+      "excerpt": "Official Anthology paper identity for Evaluating Factuality in Text Simplification.",
+      "source_category": "official",
+      "status": "verified",
+      "check_method": "Read primary source text",
+      "source_object": {}
+    }
+  ]
+}
