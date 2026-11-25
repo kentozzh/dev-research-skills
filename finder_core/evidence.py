@@ -4,8 +4,9 @@ from __future__ import annotations
 import hashlib
 import json
 import posixpath
+from urllib.parse import urlsplit
 
-from .contracts import Candidate, Evidence, Metric, ObservationBatch
+from .contracts import Candidate, Evidence, Metric, ObservationBatch, RunState
 from .validation import ContractError, _safe_url
 
 IDENTITY_FIELDS = {"doi", "arxiv", "github_repository_id", "openalex", "semantic_scholar"}
@@ -35,6 +36,75 @@ def get_metric(candidate: Candidate, name: str, provider: str | None = None) -> 
                if name in {metric_name(key, m), m.provider + "." + metric_name(key, m)}
                and (provider is None or m.provider == provider)]
     return matches[0] if len(matches) == 1 else None
+
+
+def _github_count_source(item: Evidence, card: Candidate, metric: Metric) -> bool:
+    if item.status != "verified" or item.source_category not in {"api", "official", "repository"}:
+        return False
+    repo = card.identifiers.get("github_repository_id")
+    name = card.identifiers.get("full_name")
+    repository_url = urlsplit(card.urls.get("repository", ""))
+    if not name and repository_url.hostname in {"github.com", "www.github.com"}:
+        name = repository_url.path.strip("/")
+    raw = item.source_object
+    if "stargazers_count" in raw:
+        if raw["stargazers_count"] != metric.value or (repo and "id" in raw and str(raw["id"]) != repo):
+            return False
+    if "repository_id" in item.scope and str(item.scope["repository_id"]) != repo:
+        return False
+    url = urlsplit(item.source_url)
+    parts = url.path.strip("/").split("/")
+    if url.hostname == "api.github.com":
+        if parts[0] == "search":
+            return bool(repo and str(raw.get("id")) == repo)
+        if parts[0] == "repositories":
+            return bool(repo and parts[1:2] == [repo])
+        if parts[0] != "repos":
+            return False
+        parts = parts[1:]
+    elif url.hostname not in {"github.com", "www.github.com"}:
+        return False
+    if len(parts) < 2:
+        return False
+    if name:
+        return "/".join(parts[:2]).casefold() == name.casefold()
+    return bool(repo and (str(item.scope.get("repository_id")) == repo
+                          or item.subject_id in {repo, "github:" + repo}))
+
+
+def repository_stars(state: RunState, card: Candidate) -> Metric | None:
+    """Use the same current repository observation for all of its skills."""
+    repo = card.identifiers.get("github_repository_id")
+    if card.kind == "skill" and not repo:
+        return None
+    sources = [card] if not repo else [c for c in state.candidates.values()
+        if c.kind in {"tool", "skill"} and c.identifiers.get("github_repository_id") == repo]
+    observations = [(source, m) for source in sources for key, m in source.metrics.items()
+                    if metric_name(key, m) == "stars"]
+    if not observations:
+        return None
+    newest = max(m.fetched_at for _, m in observations)
+    current = [(source, m) for source, m in observations if m.fetched_at == newest]
+    selected = current[0][1]
+    for source, metric in current:
+        if (metric.status != "verified" or metric.unit != "count" or type(metric.value) is not int
+                or metric.value < 0 or metric.value != selected.value):
+            return None
+        scoped_repo = metric.scope.get("repository_id")
+        if scoped_repo is not None and str(scoped_repo) != repo:
+            return None
+        subjects = {repo, f"github:{repo}"} if repo else set()
+        if name := source.identifiers.get("full_name"):
+            subjects.add("github:" + name)
+        if source.kind == "tool" or scoped_repo is not None:
+            subjects.update((source.candidate_id, *source.aliases))
+        if (metric.subject_id not in subjects or metric.scope.get("level", "repository") != "repository"
+                or "path" in metric.scope):
+            return None
+        if not any(eid in state.evidence and _github_count_source(state.evidence[eid], source, metric)
+                   for eid in metric.evidence_ids):
+            return None
+    return selected
 
 
 def checked_source(evidence: Evidence) -> bool:

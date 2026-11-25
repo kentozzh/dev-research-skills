@@ -12,6 +12,7 @@ from typing import Any, Literal, TypeVar
 Status = Literal["verified", "unavailable", "not_applicable", "conflict", "failed", "stale"]
 Skill = Literal["skill-finding", "tool-finding", "paper-finding"]
 T = TypeVar("T", bound="Contract")
+MIN_REPOSITORY_STARS = 10_000
 
 
 class Contract:
@@ -262,6 +263,7 @@ class GithubPolicy(Contract):
     log_caps: dict[str, int]
     without_watch_weights: dict[str, float]
     required_group_metrics: list[str]
+    minimum_repository_stars: int = MIN_REPOSITORY_STARS
 
 
 @dataclass

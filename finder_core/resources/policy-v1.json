@@ -15,6 +15,7 @@
     "older_score": 20, "archived_score": 0, "unknown_score": null
   },
   "github": {
+    "minimum_repository_stars": 10000,
     "popularity_weights": {"stars": 0.6, "forks": 0.3, "watch": 0.1},
     "log_caps": {"stars": 100000, "forks": 10000, "watch": 1000},
     "without_watch_weights": {"stars": 0.6666666666666666, "forks": 0.3333333333333333},

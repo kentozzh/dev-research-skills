@@ -97,6 +97,13 @@ module or data-flow design can be checked. Preparation uses a fresh condition
 ID if the usual key is occupied. Paper requests may state a license requirement
 when they include implementation reuse.
 
+Tool and skill recommendations require at least 10,000 verified GitHub stars on
+the project repository or the repository containing the concrete skill. This
+minimum applies before scoring, including for imported observations. A count
+below the minimum or an unverified count can appear in the exclusion record.
+Imported counts need a checked GitHub page or API response for that repository.
+Skills sharing an immutable repository ID use its latest observed count.
+
 `QuerySpec` requires `provider`, `query`, `route` (`recent`, `classic`, `general`),
 and `query_id`. Query IDs are unique within a request. Credentials do not belong
 in queries.
@@ -285,9 +292,10 @@ them as independently edited constants.
 | cache | counts/citations 86400s; queries 21600s; static paper identity 2592000s; SHA-fixed files reusable indefinitely |
 | transport | at most 2 retries; 30s per-request timeout; 120s cumulative request/wait allowance per run; arXiv one connection with at least 3s between request starts; provider limits take precedence |
 | maintenance.bands | <=30d:100, <=90d:80, <=180d:60, <=365d:40; older 20; archived 0; unknown null |
+| github.minimum_repository_stars | 10000 by default. Tool and skill recommendations require a verified count at or above this value. The policy accepts a higher minimum. |
 | github.popularity_weights | stars/forks/watch=.60/.30/.10; missing watch removes it for the frozen group, remaining weights 2/3 and 1/3 |
 | github.log_caps | stars 100000; forks 10000; watch 1000; log1p compression, capped score, raw count retained |
-| github.required_group_metrics | U, M, stars, forks; missing required values go to qualitative results |
+| github.required_group_metrics | U, M, stars, forks. After the star minimum is met, missing U, M or forks can yield a qualitative result |
 | paper routes | recent 24 months; classic unlimited year; initial budget shares .5/.5; no final split quota |
 | paper.ccf_scores | A 100, B 75, C 50; missing/inapplicable V is null |
 | paper.award_bonus | formal Best Paper 5; Outstanding 3; Distinguished 3; explicit Honorable Mention 1; max of awards, never sum |

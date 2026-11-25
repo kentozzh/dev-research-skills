@@ -10,7 +10,7 @@ from urllib.parse import urlsplit
 
 from . import venues
 from .contracts import Candidate, ComparisonGroup, Policy, RunState
-from .evidence import get_metric
+from .evidence import get_metric, repository_stars
 from .skill_inventory import candidate_skill_path
 from .validation import ContractError, load_policy
 
@@ -107,8 +107,9 @@ def github_components(state: RunState, cid: str, policy: Policy, omitted: Mappin
     assessment = state.assessments.get(cid)
     names = [key for key in policy.assessment_items[state.request.skill] if key not in omitted]
     usability = score_assessment([assessment.usability[key].to_dict() for key in names]) if assessment else None
-    stars, forks, watchers = (metric_value(card, name) for name in ("stars", "forks", "watchers"))
-    stars = stars if type(stars) is int and stars >= 0 else None
+    star_metric = repository_stars(state, card)
+    stars = star_metric.value if star_metric is not None else None
+    forks, watchers = (metric_value(card, name) for name in ("forks", "watchers"))
     forks = forks if type(forks) is int and forks >= 0 else None
     watchers = watchers if type(watchers) is int and watchers >= 0 else None
     archived = metric_value(card, "archived")
@@ -132,6 +133,7 @@ def github_components(state: RunState, cid: str, policy: Policy, omitted: Mappin
     scope = dict(get_metric(card, updated_name).scope) if updated_name else {}
     directory_proxy = updated_name == "path_updated_at" and scope.get("path") != candidate_skill_path(card)
     result = {"U": usability, "M": maintenance, "stars": stars, "forks": forks,
+            "stars_evidence_ids": star_metric.evidence_ids if star_metric else [],
             "watchers": watchers, "maintenance_source": updated_name, "maintenance_days": days,
             "maintenance_proxy": updated_name == "pushed_at" or directory_proxy}
     if card.kind == "skill":

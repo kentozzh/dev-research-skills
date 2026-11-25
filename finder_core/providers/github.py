@@ -7,7 +7,7 @@ import hashlib
 import json
 import math
 import re
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from datetime import datetime
 from urllib.parse import quote
 
@@ -64,7 +64,12 @@ class GitHubProvider:
     def _evidence(self, result, subject, scope, data, *, status=None):
         # Only selected API facts are retained, never a local repository copy.
         excerpt = json.dumps(data, ensure_ascii=False, allow_nan=False, sort_keys=True)
-        key = json.dumps([result.source_url, subject, result.fetched_at.isoformat(), scope, data], sort_keys=True)
+        identity = [result.source_url, subject, result.fetched_at.isoformat(), scope, data]
+        if result.state == "stale":
+            # Cached facts retain the original fetch time. Record the failed
+            # refresh separately so it cannot overwrite the verified evidence.
+            identity.append("stale")
+        key = json.dumps(identity, sort_keys=True)
         eid = "github-evidence:" + hashlib.sha256(key.encode()).hexdigest()
         item = Evidence(eid, result.source_url, subject, result.fetched_at, scope,
                         excerpt[:1200], "api", status or result.state,
@@ -135,7 +140,28 @@ class GitHubProvider:
         return Metric(value, status, unit, "github", subject, result.fetched_at,
                       metric_scope, [evidence.evidence_id], METHOD)
 
-    def search(self, query: QuerySpec) -> ProviderBatch:
+    @property
+    def _star_floor(self) -> int | None:
+        if self.client.skill in {"tool-finding", "skill-finding"}:
+            return self.client.policy.github.minimum_repository_stars
+        return None
+
+    def _load_code_hit_metrics(self, card, details):
+        """The code search API often omits counts from its repository objects."""
+        rid = card.identifiers["github_repository_id"]
+        if rid not in details:
+            name = card.identifiers["full_name"]
+            result, data = self._get("/repos/" + quote(name, safe="/"))
+            detail = None
+            if isinstance(data, dict) and data.get("id") == int(rid):
+                detail = self._repo(data, result)
+            details[rid] = detail
+        if detail := details[rid]:
+            card.metrics = detail.metrics
+            card.identifiers.update(detail.identifiers)
+            card.discovery_evidence_ids.extend(detail.discovery_evidence_ids)
+
+    def search(self, query: QuerySpec, *, existing: Iterable[Candidate] = ()) -> ProviderBatch:
         start = len(self.evidence)
         code_query = bool(re.search(r"(?:^|\s)(?:filename|path|extension):", query.query))
         code = code_query and self.client.is_authenticated("github")
@@ -144,6 +170,9 @@ class GitHubProvider:
             text = re.sub(r'(?:^|\s)(?:filename|path|extension):(?:"[^"]*"|\S+)', " ", text).strip()
             self._limit("code file search unavailable without credentials; repository discovery and discovered file inspection fallback")
         text = (text or "SKILL") + " is:public"
+        floor = self._star_floor
+        if floor is not None and not code and not re.search(r"(?:^|\s)stars:", text):
+            text += f" stars:>={floor}"
         cap = min(60, self.client.policy.capacity.github_initial)
         params = {"q": text, "per_page": cap, "page": 1}
         if not code:
@@ -158,7 +187,13 @@ class GitHubProvider:
                        {"total_count": payload.get("total_count"),
                         "observed_items": len(payload["items"]),
                         "incomplete_results": payload.get("incomplete_results")})
-        cards = {}
+        known = {}
+        for previous in existing:
+            rid = previous.identifiers.get("github_repository_id")
+            if rid and (previous.kind == "tool" or (previous.kind == "skill" and rid not in known)):
+                known[rid] = previous
+        cards, details, updates = {}, {}, {}
+        unverified_counts = False
         items = payload["items"][:cap]
         for item in items:
             if not isinstance(item, dict):
@@ -170,13 +205,30 @@ class GitHubProvider:
                 continue
             card = self._repo(data, result, path=item.get("path") if code else None,
                               file_url=item.get("html_url") if code else None)
-            if card:
-                if card.candidate_id in cards:
-                    old = cards[card.candidate_id]
-                    old.urls.update(card.urls)
-                    old.discovery_evidence_ids = list(dict.fromkeys(old.discovery_evidence_ids + card.discovery_evidence_ids))
-                else:
-                    cards[card.candidate_id] = card
+            if card is None:
+                continue
+            if floor is not None:
+                if code and card.metrics["stars"].value is None:
+                    self._load_code_hit_metrics(card, details)
+                stars = card.metrics["stars"]
+                previous = known.get(card.identifiers["github_repository_id"])
+                unverified_counts |= stars.status != "verified"
+                eligible = stars.status == "verified" and stars.value >= floor
+                if previous is not None and (not eligible or previous.kind == "skill"):
+                    # Refresh the existing identity without using a discovery
+                    # slot. An imported skill can be the only record of its repo.
+                    updates[previous.candidate_id] = Candidate(previous.candidate_id, previous.kind,
+                                                               metrics={"stars": stars})
+                if not eligible:
+                    continue
+            if card.candidate_id in cards:
+                old = cards[card.candidate_id]
+                old.urls.update(card.urls)
+                old.discovery_evidence_ids = list(dict.fromkeys(old.discovery_evidence_ids + card.discovery_evidence_ids))
+            else:
+                cards[card.candidate_id] = card
+        if unverified_counts:
+            self._limit("Repository star count unavailable or unverified for some search hits")
         self._limit(f"initial candidates maximum {cap}; observed before dedup {len(items)}; after dedup {len(cards)}")
         incomplete = payload.get("incomplete_results") is True
         if incomplete:
@@ -186,7 +238,8 @@ class GitHubProvider:
         if more or len(payload["items"]) > cap:
             self._limit(f"search pagination stopped at initial cap {cap}; more matches may exist")
         self._observations.update(cards)
-        return self._batch(list(cards.values()), start, partial=result.partial or incomplete or more or (code_query and not code),
+        cards.update(updates)
+        return self._batch(list(cards.values()), start, partial=result.partial or incomplete or more or unverified_counts or (code_query and not code),
                            cursor="page=2" if more else None)
 
     def _batch(self, cards, start, *, partial=False, cursor=None):
@@ -230,19 +283,23 @@ class GitHubProvider:
                 self._limit("repository identity changed at owner/name; detail not assigned to original")
                 partial = True
                 continue
-            release, data = self._get("/repos/" + quote(name, safe="/") + "/releases/latest", allow404=True)
-            scope = {"repository_id": card.identifiers["github_repository_id"], "level": "repository"}
-            value = data.get("published_at") if isinstance(data, dict) else None
-            ev = self._evidence(release, card.candidate_id, scope, {"published_at": value},
-                                status="unavailable" if release.status == 404 else None)
-            card.metrics["released_at"] = self._metric(value, "datetime", release, card.candidate_id, scope, ev,
-                                                       missing="unavailable" if release.status == 404 or release.state in ("verified", "stale") else "failed")
+            stars = card.metrics["stars"]
+            floor = self._star_floor
+            if floor is None or stars.status != "verified" or stars.value >= floor:
+                release, data = self._get("/repos/" + quote(name, safe="/") + "/releases/latest", allow404=True)
+                scope = {"repository_id": card.identifiers["github_repository_id"], "level": "repository"}
+                value = data.get("published_at") if isinstance(data, dict) else None
+                ev = self._evidence(release, card.candidate_id, scope, {"published_at": value},
+                                    status="unavailable" if release.status == 404 else None)
+                card.metrics["released_at"] = self._metric(value, "datetime", release, card.candidate_id, scope, ev,
+                                                           missing="unavailable" if release.status == 404 or release.state in ("verified", "stale") else "failed")
+                partial |= release.partial and release.status != 404
             if original.kind == "skill" and (path := original.identifiers.get("skill_path", original.identifiers.get("path"))):
                 card.kind = "skill"
                 card.candidate_id += ":" + path
                 card.identifiers["skill_path"] = path
             cards.append(card)
-            partial |= result.partial or (release.partial and release.status != 404) or any(m.status == "failed" for m in card.metrics.values())
+            partial |= result.partial or any(m.status == "failed" for m in card.metrics.values())
         return self._batch(cards, start, partial=partial)
 
     def resolve_ref(self, repo_id: str, ref: str) -> str | None:

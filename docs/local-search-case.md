@@ -1,5 +1,7 @@
 # Designing local document search
 
+This case records a run from v1.1.1. Starting with v1.1.2, tool and skill recommendations require at least 10,000 verified GitHub stars on the source repository.
+
 A developer has a collection of text files and a CPU-only Python application. A query should return document IDs in relevance order, and documents must stay on the machine. Three design decisions follow from that brief.
 
 ## 1. Start with a measured retrieval design

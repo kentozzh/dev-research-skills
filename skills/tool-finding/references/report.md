@@ -12,7 +12,7 @@ Preserve this order.
 
 1. One-sentence first choice, or no confirmed eligible candidate.
 2. Current hard conditions, preferences and explicit assumptions.
-3. Show the formal positions, identity and links, requirement coverage, raw Star/Fork/Watch, maintenance and version signals, license observations, U/P/M and index in a table. Follow with a condition × candidate matrix. Include key excluded and pending alternatives with the evidence behind each judgment.
+3. Show the formal positions, identity and links, requirement coverage, raw Star/Fork/Watch, maintenance and version signals, license observations, U/P/M and index in a table. Follow with a condition × candidate matrix. Show important exclusions and pending checks with their evidence. Keep projects below 10,000 stars or with an unverified count out of every recommendation and alternative.
 4. Explain why the first choice leads and when an alternative fits better, using evidence relevant to the current purpose. Report the usability judgments, reading depth, limits and maintenance basis. Include the proposed validation for this purpose.
 5. Qualitative/supplementary and pending candidates, with specific missing facts or adaptation costs. Do not intermingle them with the ranked formal table or assign invented indices.
 6. Key exclusions and failed conditions. Label archived candidates “历史/受限方案” for current development. Long-lived stable projects with no release remain separate from archived ones.

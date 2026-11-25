@@ -9,6 +9,7 @@ from .contracts import Candidate, CohortSummary, Evidence, ObservationBatch, Pol
 from .identity import merge_observations, snapshot_id
 from .evidence import content_hash
 from .providers.base import Provider
+from .providers.github import GitHubProvider
 from .validation import ContractError
 from .skill_inventory import candidate_skill_path, extract_skill_candidates, normalize_skill_path, resolve_reference, skill_candidate_id
 
@@ -195,7 +196,10 @@ def run_discovery(state: RunState, providers: Mapping[str, Provider], policy: Po
                 if limit not in state.limits:
                     state.limits.append(limit)
             with client.paper_initial_scope(route) if scoped else nullcontext():
-                batch = provider.search(query)
+                if state.request.skill != "paper-finding" and isinstance(provider, GitHubProvider):
+                    batch = provider.search(query, existing=state.candidates.values())
+                else:
+                    batch = provider.search(query)
             merged = _merge(state, batch, policy)
         except Exception:
             # Provider messages can contain credentials or response bodies.

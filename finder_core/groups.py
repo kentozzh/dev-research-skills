@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from .contracts import ComparisonGroup, Policy, RunState
+from .evidence import repository_stars
 from .scoring import github_components, paper_components, paper_venue_context, scoring_reference
 from .validation import ContractError, validate_assessment
 
@@ -16,10 +17,22 @@ def omitted_items(state: RunState, policy: Policy) -> dict[str, str]:
     return dict(omitted)
 
 
+def star_exclusion(state: RunState, cid: str, policy: Policy) -> str | None:
+    minimum = policy.github.minimum_repository_stars
+    stars = repository_stars(state, state.candidates[cid])
+    if stars is None:
+        return f"所属 GitHub 仓库的 Star 数未核实，推荐至少需要 {minimum:,} Stars。"
+    if stars.value < minimum:
+        return f"所属 GitHub 仓库有 {stars.value:,} Stars，低于 {minimum:,} Stars 的推荐门槛。"
+    return None
+
+
 def eligibility(state: RunState, cid: str, policy: Policy) -> str:
     expected = {"skill-finding": "skill", "tool-finding": "tool", "paper-finding": "paper"}[state.request.skill]
     if state.candidates[cid].kind != expected:
         return "discovery"
+    if expected != "paper" and star_exclusion(state, cid, policy):
+        return "excluded"
     assessment = state.assessments.get(cid)
     if assessment is None:
         return "pending"
@@ -43,7 +56,7 @@ def build_group(state: RunState, policy: Policy, *, venue_context: dict | None =
     for cid in sorted(state.candidates):
         status = eligibility(state, cid, policy)
         if status != "eligible":
-            reasons[cid] = status
+            reasons[cid] = (star_exclusion(state, cid, policy) if status == "excluded" else None) or status
             continue
         facts = github_components(state, cid, policy, omitted)
         missing = [name for name in policy.github.required_group_metrics if facts.get(name) is None]

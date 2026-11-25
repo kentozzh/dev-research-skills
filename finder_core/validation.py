@@ -302,6 +302,9 @@ def validate_contract(obj) -> None:
                 _count(getattr(obj, key), path(key))
         if obj.acceptance_numerator is not None and obj.acceptance_denominator is not None and obj.acceptance_numerator > obj.acceptance_denominator:
             _fail(path("acceptance_numerator"), "cannot exceed denominator")
+    elif isinstance(obj, c.GithubPolicy):
+        if obj.minimum_repository_stars < c.MIN_REPOSITORY_STARS:
+            _fail(path("minimum_repository_stars"), f"requires at least {c.MIN_REPOSITORY_STARS} stars")
     elif isinstance(obj, c.TransportPolicy):
         _count(obj.max_retries, path("max_retries"))
         if obj.timeout_seconds <= 0:

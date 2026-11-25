@@ -6,7 +6,7 @@ import re
 from datetime import timedelta, timezone
 from importlib.resources import files
 
-from .contracts import Candidate, CohortSummary, Evidence, RankedReport, VenueRecord
+from .contracts import MIN_REPOSITORY_STARS, Candidate, CohortSummary, Evidence, RankedReport, VenueRecord
 from .evidence import content_hash, get_metric, metric_name
 from .scoring import metric_value, parse_timestamp
 from .source_links import build_source_index, markdown_link, source_appendix, source_line
@@ -16,6 +16,10 @@ from .validation import ARCHITECTURE_CONDITION, ContractError
 
 def render_report(report: RankedReport, format: str) -> str:
     p = report.provenance
+    if p.get("request", {}).get("skill") in {"skill-finding", "tool-finding"}:
+        minimum = p.get("policy", {}).get("github", {}).get("minimum_repository_stars")
+        if type(minimum) is not int or minimum < MIN_REPOSITORY_STARS:
+            raise ContractError("report.policy", "Repository star threshold missing or outdated; rerun rank")
     if p.get("venue_config_hash") is not None and p["venue_config_hash"] != content_hash({
             "records": p.get("venue_records", []), "evidence": p.get("venue_evidence", {})}):
         raise ContractError("report.venue_config_hash", "saved venue evidence snapshot changed; rerank current facts")
@@ -349,6 +353,9 @@ def _render_tool_report(report: RankedReport, rows: list[dict]) -> str:
         return f"{shown}：{safe(item.get('reason', '证据不足'))} {refs(item.get('evidence_ids', []))}".rstrip()
 
     def fact(cid, key):
+        if key == "stars":
+            stars = components[cid]
+            return f"{stars['stars']} [verified] {refs(stars['stars_evidence_ids'])}".rstrip()
         metric = get_metric(cards[cid], key)
         if metric is None:
             return "未获取或来源冲突"
@@ -382,6 +389,8 @@ def _render_tool_report(report: RankedReport, rows: list[dict]) -> str:
         purpose = "架构借鉴" if architecture else "复用"
         summary = f"有符合{purpose}条件的候选可作定性参考，当前证据不足以给出正式排名。"
     constraints = [f"- 原始任务：{safe(request.get('raw_request', ''))}"]
+    minimum_stars = p["policy"]["github"]["minimum_repository_stars"]
+    constraints.append(f"- 推荐门槛为所属 GitHub 仓库至少 {minimum_stars:,} Stars（含）。")
     if not is_skill:
         constraints.append(f"- 调研用途：{'架构借鉴' if architecture else '组件复用'}")
     constraints.extend(f"- {safe(key)}：{safe(value)}" for key, value in request.get("hard_constraints", {}).items())
@@ -484,7 +493,10 @@ def _render_tool_report(report: RankedReport, rows: list[dict]) -> str:
     for cid in report.excluded:
         a = assessments.get(cid, {})
         label = "历史/受限方案；" if metric_value(cards[cid], "archived") is True else ""
-        excluded.append(f"- {name(cid)}：{label}{safe(a.get('reason', '条件或相关性不符'))}")
+        reason = p.get("missing_reasons", {}).get(cid)
+        if not reason or reason == "excluded":
+            reason = a.get("reason", "条件或相关性不符")
+        excluded.append(f"- {name(cid)}：{label}{safe(reason)}")
         excluded.extend(f"  - {safe(key)}：{judgment(item)}" for key, item in a.get("hard_constraints", {}).items() if item.get("result") == "fail")
 
     sources = [f"- run/revision/snapshot：{safe(p.get('run_id'))} / {safe(p.get('contract_revision'))} / {safe(p.get('snapshot_id'))}",

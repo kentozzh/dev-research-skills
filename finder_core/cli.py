@@ -14,7 +14,7 @@ from .contracts import Candidate, CohortManifest, RankedReport, RunState
 from .cohort_stats import METHOD as COHORT_METHOD, calculate_cohort, combine_cohorts, eligible_cohort_years, load_saved_acl_cohort
 from datetime import datetime, timezone
 from .evidence import content_hash
-from .groups import build_group
+from .groups import build_group, star_exclusion
 from .providers.imported import validate_observations
 from .ranking import rank_candidates
 from .reporting import render_report
@@ -105,11 +105,13 @@ def _parser():
     return parser
 
 
-def _stale(state):
+def _stale(state, policy):
     expected = {"skill-finding":"skill","tool-finding":"tool","paper-finding":"paper"}[state.request.skill]
-    has_entities = any(card.kind == expected for card in state.candidates.values())
-    return (state.invalidated and has_entities) or any(a.contract_revision != state.request.contract_revision or
-        a.snapshot_id != state.snapshot_id for a in state.assessments.values())
+    if state.invalidated and any(card.kind == expected and (expected == "paper" or not star_exclusion(state, cid, policy))
+                                 for cid, card in state.candidates.items()):
+        return True
+    return any(a.contract_revision != state.request.contract_revision or a.snapshot_id != state.snapshot_id
+               for a in state.assessments.values())
 
 
 def _venue_statistics(args, state):
@@ -188,9 +190,12 @@ def _execute(args):
     if args.command == "report":
         state = load_run(run_dir)
         path = run_dir / "ranking.json"
-        if _stale(state) or not path.exists():
+        if _stale(state, policy) or not path.exists():
             return 4, {"reason": "Ranking is missing or invalidated; assess and rank the current snapshot"}
         report = RankedReport.from_dict(_read(path))
+        ranked_minimum = report.provenance.get("policy", {}).get("github", {}).get("minimum_repository_stars")
+        if state.request.skill in {"tool-finding", "skill-finding"} and ranked_minimum != policy.github.minimum_repository_stars:
+            return 4, {"reason": "Repository star threshold changed; rerun rank for the current snapshot"}
         if report.provenance.get("snapshot_id") != state.snapshot_id or report.provenance.get("contract_revision") != state.request.contract_revision or report.provenance.get("state_hash") != content_hash(state.to_dict()):
             return 4, {"reason": "Ranking does not match the canonical current run"}
         if "venue_statistics" in report.provenance:
@@ -224,7 +229,7 @@ def _execute(args):
             if assessments:
                 state.invalidated, state.invalidation_reason = False, None
         elif args.command == "rank":
-            if _stale(state):
+            if _stale(state, policy):
                 return 4, {"reason": state.invalidation_reason or "Assessments do not match the current snapshot"}
             report = rank_candidates(state, build_group(state, policy), policy)
             if state.request.skill == "paper-finding" and (run_dir / "venue-stats.json").exists():

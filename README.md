@@ -12,11 +12,13 @@ dev-research-skills helps you design a feasible, efficient system by answering t
 | **Who has built something similar?** | `tool-finding` traces a comparable open-source project's design to source files or design documents. You can see where modules meet, what data passes between them and which choices fit your constraints. |
 | **Which steps can I reuse?** | `tool-finding` checks an existing component's interface, dependencies and license. `skill-finding` checks a specific agent skill, its required tools and its fit with your host. Both help you decide what you can adopt and what needs adapting. |
 
+`tool-finding` and `skill-finding` only recommend projects with at least 10,000 verified GitHub stars. For a skill, the count belongs to the repository containing its `SKILL.md`. If no match reaches the threshold, the report returns no recommendations.
+
 After installation, give `using-dev-research` your goal, inputs, expected outputs and constraints in a project chat. You can also name a specialist directly.
 
 > I'm building local document search on a CPU. Given a text query, I need ranked document IDs. Which retrieval design has been evaluated? How does a similar project separate indexing from queries? Can I reuse a search component and an agent skill for regression tests?
 
-The finders return Chinese reports with original sources, comparisons and remaining checks. In this example, the paper supplied a quality–latency comparison, Pyserini showed the index boundary, and an independent local check exercised SQLite FTS5. The testing skill was reviewed at source level. [Worked example and reproducible check](docs/local-search-case.md)
+The finders return Chinese reports with original sources, comparisons and remaining checks. In the v1.1.1 example, the paper supplied a quality–latency comparison, Pyserini showed the index boundary, and an independent local check exercised SQLite FTS5. The testing skill was reviewed at source level. [Worked example and reproducible check](docs/local-search-case.md)
 
 ## Install and update from GitHub
 
